@@ -1,1 +1,0 @@
-# jkomoroski.github.io
