@@ -6,10 +6,20 @@
     <description>Recent content on Kasual Komoroski</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Feb 2018 21:41:29 -0700</lastBuildDate>
+    <lastBuildDate>Tue, 20 Feb 2018 21:10:29 -0700</lastBuildDate>
     
 	<atom:link href="https://jkomoroski.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>My Lab</title>
+      <link>https://jkomoroski.github.io/blog/my-lab/</link>
+      <pubDate>Tue, 20 Feb 2018 21:10:29 -0700</pubDate>
+      
+      <guid>https://jkomoroski.github.io/blog/my-lab/</guid>
+      <description>Before I provide any guides on my various running projects, I feel the need to describe the lab that I have at my disposal. Today, the lab is very simple consisting of the following hardware components:
+ Fiber to the home 100 Mb connection Netgear Nighthawk Home Router () Raspberry Pi 3 Home Server Workstation PC  Beyond the items listed above I have my various home hardware and IOT devices on my network (Cellphones, Laptops, IoT, etc).</description>
+    </item>
     
     <item>
       <title>Hello World!</title>
