@@ -6,10 +6,19 @@
     <description>Recent content in Tags on Kasual Komoroski</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Mar 2018 15:57:18 -0700</lastBuildDate>
+    <lastBuildDate>Tue, 20 Feb 2018 21:10:29 -0700</lastBuildDate>
     
 	<atom:link href="https://jkomoroski.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>About</title>
+      <link>https://jkomoroski.github.io/tags/about/</link>
+      <pubDate>Tue, 20 Feb 2018 21:10:29 -0700</pubDate>
+      
+      <guid>https://jkomoroski.github.io/tags/about/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Config</title>
@@ -17,6 +26,24 @@
       <pubDate>Sat, 03 Mar 2018 15:57:18 -0700</pubDate>
       
       <guid>https://jkomoroski.github.io/tags/config/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Hardware</title>
+      <link>https://jkomoroski.github.io/tags/hardware/</link>
+      <pubDate>Tue, 20 Feb 2018 21:10:29 -0700</pubDate>
+      
+      <guid>https://jkomoroski.github.io/tags/hardware/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Homelab</title>
+      <link>https://jkomoroski.github.io/tags/homelab/</link>
+      <pubDate>Tue, 20 Feb 2018 21:10:29 -0700</pubDate>
+      
+      <guid>https://jkomoroski.github.io/tags/homelab/</guid>
       <description></description>
     </item>
     
