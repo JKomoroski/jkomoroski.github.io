@@ -6,10 +6,19 @@
     <description>Recent content in Tags on Kasual Komoroski</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 02 Oct 2016 22:55:05 -0400</lastBuildDate>
+    <lastBuildDate>Sat, 03 Mar 2018 15:57:18 -0700</lastBuildDate>
     
 	<atom:link href="https://jkomoroski.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Config</title>
+      <link>https://jkomoroski.github.io/tags/config/</link>
+      <pubDate>Sat, 03 Mar 2018 15:57:18 -0700</pubDate>
+      
+      <guid>https://jkomoroski.github.io/tags/config/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Projects</title>
@@ -17,6 +26,24 @@
       <pubDate>Sun, 02 Oct 2016 22:55:05 -0400</pubDate>
       
       <guid>https://jkomoroski.github.io/tags/projects/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Scripts</title>
+      <link>https://jkomoroski.github.io/tags/scripts/</link>
+      <pubDate>Sat, 03 Mar 2018 15:57:18 -0700</pubDate>
+      
+      <guid>https://jkomoroski.github.io/tags/scripts/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Shell</title>
+      <link>https://jkomoroski.github.io/tags/shell/</link>
+      <pubDate>Sat, 03 Mar 2018 15:57:18 -0700</pubDate>
+      
+      <guid>https://jkomoroski.github.io/tags/shell/</guid>
       <description></description>
     </item>
     
