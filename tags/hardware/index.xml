@@ -13,10 +13,10 @@
     
     <item>
       <title>My Lab</title>
-      <link>https://jkomoroski.github.io/blog/my-lab/</link>
+      <link>https://jkomoroski.github.io/2018/02/20/my-lab/</link>
       <pubDate>Tue, 20 Feb 2018 21:10:29 -0700</pubDate>
       
-      <guid>https://jkomoroski.github.io/blog/my-lab/</guid>
+      <guid>https://jkomoroski.github.io/2018/02/20/my-lab/</guid>
       <description>Before I provide any guides on my various running projects, I feel the need to describe the lab that I have at my disposal. Today, the lab is very simple consisting of the following hardware components:
  Fiber to the Home 100Mb Connection NETGEAR Nighthawk AC1900 (R7000) Home Router Raspberry Pi 3 Home Server  Ubuntu 17.10 64bit Linux 4.13.0-32-generic Intel Core i7 CPU 860 @ 2.80GHz 16 Gb Ram 4Tb Storage  Workstation PC  Windows 10 Pro N Intel Core i7 CPU 4790K @ 4.</description>
     </item>

@@ -6,17 +6,26 @@
     <description>Recent content in Config on Kasual Komoroski</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Mar 2018 15:57:18 -0700</lastBuildDate>
+    <lastBuildDate>Mon, 05 Mar 2018 20:10:31 -0700</lastBuildDate>
     
 	<atom:link href="https://jkomoroski.github.io/tags/config/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Let&#39;s Talk Kubernetes Ingress</title>
+      <link>https://jkomoroski.github.io/2018/03/05/lets-talk-kubernetes-ingress/</link>
+      <pubDate>Mon, 05 Mar 2018 20:10:31 -0700</pubDate>
+      
+      <guid>https://jkomoroski.github.io/2018/03/05/lets-talk-kubernetes-ingress/</guid>
+      <description>If you don&amp;rsquo;t know what Kubernetes is, I highly suggest to look into it. It&amp;rsquo;s a container orchestration system that runs anywhere. In short, it takes the simple but powerful concept of a containerized application (popularized by docker), and ramps it up to web scale levels. It allows you to deploy and manage hundreds or thousands of contaners without the pain of managing the VM and OS layers assocated with a normal deployment.</description>
+    </item>
+    
+    <item>
       <title>Hugo Markdown Setup</title>
-      <link>https://jkomoroski.github.io/blog/blog-script/</link>
+      <link>https://jkomoroski.github.io/2018/03/03/hugo-markdown-setup/</link>
       <pubDate>Sat, 03 Mar 2018 15:57:18 -0700</pubDate>
       
-      <guid>https://jkomoroski.github.io/blog/blog-script/</guid>
+      <guid>https://jkomoroski.github.io/2018/03/03/hugo-markdown-setup/</guid>
       <description>Now that I&amp;rsquo;ve got my blog set up I thought I should share the set up I use script I use when writing blog posts (and maybe markdown pages in general).
 If you don&amp;rsquo;t know what Hugo is, I suggest you check it out. At its core a static site generator that takes markdown files and compiles them into static html files, but it does so much more. Packaged with the file compiler is a webserver that uses websockets to support a live reload feature.</description>
     </item>

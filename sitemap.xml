@@ -3,7 +3,12 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://jkomoroski.github.io/blog/blog-script/</loc>
+    <loc>https://jkomoroski.github.io/2018/03/05/lets-talk-kubernetes-ingress/</loc>
+    <lastmod>2018-03-05T20:10:31-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jkomoroski.github.io/2018/03/03/hugo-markdown-setup/</loc>
     <lastmod>2018-03-03T15:57:18-07:00</lastmod>
   </url>
   
@@ -13,12 +18,12 @@
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/blog/my-lab/</loc>
+    <loc>https://jkomoroski.github.io/2018/02/20/my-lab/</loc>
     <lastmod>2018-02-20T21:10:29-07:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/blog/hello-world/</loc>
+    <loc>https://jkomoroski.github.io/2018/02/17/hello-world/</loc>
     <lastmod>2018-02-17T21:41:29-07:00</lastmod>
   </url>
   
@@ -35,7 +40,7 @@
   
   <url>
     <loc>https://jkomoroski.github.io/blog/</loc>
-    <lastmod>2018-03-03T15:57:18-07:00</lastmod>
+    <lastmod>2018-03-05T20:10:31-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -46,7 +51,7 @@
   
   <url>
     <loc>https://jkomoroski.github.io/tags/config/</loc>
-    <lastmod>2018-03-03T15:57:18-07:00</lastmod>
+    <lastmod>2018-03-05T20:10:31-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -58,13 +63,19 @@
   
   <url>
     <loc>https://jkomoroski.github.io/tags/homelab/</loc>
-    <lastmod>2018-02-20T21:10:29-07:00</lastmod>
+    <lastmod>2018-03-05T20:10:31-07:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://jkomoroski.github.io/</loc>
-    <lastmod>2018-03-03T15:57:18-07:00</lastmod>
+    <lastmod>2018-03-05T20:10:31-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jkomoroski.github.io/tags/kubernetes/</loc>
+    <lastmod>2018-03-05T20:10:31-07:00</lastmod>
     <priority>0</priority>
   </url>
   
