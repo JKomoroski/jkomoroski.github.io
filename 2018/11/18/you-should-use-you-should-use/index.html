@@ -7,7 +7,7 @@
     <meta name="author" content="map[]" />
     <meta name="description" content="A Technical Blog">
     <link rel="shortcut icon" type="image/x-icon" href="https://jkomoroski.github.io/img/favicon.ico">
-    <title>Hugo Markdown Setup</title>
+    <title>You Should Use You Should Use</title>
     <meta name="generator" content="Hugo 0.37" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://jkomoroski.github.io/css/main.css" />
@@ -52,112 +52,51 @@
       <div class="container">
         <div class="blog-post">
           <h3>
-            <strong><a href="https://jkomoroski.github.io/2018/03/03/hugo-markdown-setup/">Hugo Markdown Setup</a></strong>
+            <strong><a href="https://jkomoroski.github.io/2018/11/18/you-should-use-you-should-use/">You Should Use You Should Use</a></strong>
           </h3>
         </div>
         <div class="blog-title">
           <h4>
-          March 3, 2018
+          November 18, 2018
             &nbsp;&nbsp;
-            
-            <span class="label label-success">scripts</span>
             
             <span class="label label-success">shell</span>
             
-            <span class="label label-success">config</span>
+            <span class="label label-success">taskwarrior</span>
+            
+            <span class="label label-success">ysu</span>
+            
+            <span class="label label-success">cli</span>
             
           </h4>
         </div>
         <div class="panel panel-default">
           <div class="panel-body">
             <div class="blogpost">
-              <p>Now that I&rsquo;ve got my blog set up I thought I should share the set up I use script I use when writing blog posts (and maybe markdown pages in general).</p>
+              <p>A while ago I installed a zsh plugin to remind me of my plugins called
+<a href="https://github.com/MichaelAquilina/zsh-you-should-use">You Should Use</a> (ysu). The idea behind it is fairly simple, if
+you have configured an alias for a given command, it will will remind you about that alias if you use the command
+directly, rather call it via the alias. For example, when I use task warrior to mark a task completed, I may type:</p>
 
-<p>If you don&rsquo;t know what Hugo is, I suggest you <a href="https://gohugo.io">check it out</a>. At its core a static site generator that takes markdown files and compiles them into static html files, but it does so much more. Packaged with the file compiler is a webserver that uses websockets to support a live reload feature. What this means in practice is that if you have a text editor that has an auto save feature, you can simply start up the server and start writing a post and watch it reload
-in a broswer window.</p>
-
-<p>My text editor of choice is <a href="https://neovim.io/">Neovim</a>, which is a refactor of Vim. I like the ideas behind the project and have yet to come across any downsides of it compared to Vim. In order to enable autosave in the editor, I open a new file and enter the following while in command mode:</p>
-
-<p><code>autocmd TextChanged,TextChangedI &lt;buffer&gt; silent write</code></p>
-
-<p>My server start script is still a work in progress. The current form can be viewed in the blog&rsquo;s source code <a href="https://raw.githubusercontent.com/JKomoroski/HugoBlogSource/master/start_server">here</a>. Here&rsquo;s what it looks like today:</p>
-
-<pre><code>#!/bin/sh
-
-# Parse options for this script
-# Extensable for future additions
-BEGIN=true
-END=false
-while getopts &quot;eh?&quot; option
-do
-    case &quot;${option}&quot;
-        in
-        e)
-            BEGIN=false
-            END=true
-            ;;
-        h)
-            printf '%s\n' &quot;Use flag -e (end) to end development, default behavior starts development.&quot;
-            ;;
-        *)
-            printf '%s\n' &quot;Use flag -e (end) to end development, default behavior starts development.&quot;
-            ;;
-    esac
-done
-
-if [ $BEGIN == true ]
-then
-    printf '%s\n' &quot;Beginning Development, Starting Hugo Server&quot; \
-    &amp;&amp; `hugo server -w -D -F --disableFastRender &gt;&gt; /dev/null &amp;` \
-    &amp;&amp; printf '%s\n' &quot;Hugo Server Started&quot; \
-    &amp;&amp; printf '%s\n' &quot;http://localhost:1313&quot;
-elif [ $END == true ]
-then
-    printf '%s\n' &quot;Stopping Hugo Server...&quot; \
-    &amp;&amp; killall hugo &gt;&gt; /dev/null \
-    &amp;&amp; printf '%s\n' &quot;Hugo Server Stopped!&quot;
-fi
+<pre><code>task 6 done
 </code></pre>
 
-<p>My goal with that script is to try to remain posix compliant in the script, so it will be portable to my future machines or to workstations other than my own. In brief, the script will start the hugo server in the current directory with a specific set of flags. It has a <code>-h</code> flag for help in
-the event that anyone else clones it and if the script is passed the <code>-e</code> flag it will end the current session. It&rsquo;s not the best bash script and there are better ways to do it, but it gets the job done.</p>
+<p>Since I have a zsh plugin with aliases for Task Warrior installed, ysu returns the following message before executing
+the command:</p>
 
-<p>Unfortunately, I can&rsquo;t launch my browser of choice from the script at the time of start up because OSX and firefox don&rsquo;t play nice, so that piece is still manual at this time. However, I do echo the the localhost url that the blog is hosted on so I can use my terminal&rsquo;s parse for url feature to simply open the blog on a new page.</p>
-
-<hr />
-
-<hr />
-
-<p>While getting this set up, I did find it some what annoying that I had to type out the current date/time everytime I started a .md file from scratch. I found this little gem of a command:</p>
-
-<p><code>:put =strftime('%FT%T%z')</code></p>
-
-<p>This outputs:</p>
-
-<p><code>2018-03-03T15:57:18-0700</code></p>
-
-<p>This does not work with hugo because it is not completely ISO 8601 compliant as the timezone offset should be colon delimited between the hour and minute offset. Your output will vary depeinding on the implimentation of strftime() on your system. My system is using a BSD implimentation with the following gem in the man page:</p>
-
-<pre><code>BUGS
-     There is no conversion specification for the phase of the moon.
+<pre><code> Found existing alias for &quot;task&quot;. You should use: &quot;t&quot;
 </code></pre>
+
+<p>This indicates that I could have used <code>t 6 done</code> to mark my sixth task as completed, saving a few key strokes. By
+default, the command then executes as normal. The plugin also has a hardcore mode that requires the use of existing
+aliases before executing a command.</p>
+
+<p>Turn your interactive shell into a more inviting place by adding ysu to it today. Start using those aliases you
+installed with plugins and forgot about or  or never knew about,</p>
 
               <hr>
               <div class="related-posts">
                 <h5>Related Posts</h5>
-                
-                  <div class="row">
-                    <div class="col-sm-4 col-md-4 col-lg-4">
-                      <h6 style="text-align: right">
-                        November 18, 2018
-                      </h6>
-                    </div>
-                    <div class="col-sm-8 col-md-8 col-lg-8">
-                      <h6 style="text-align: left">
-                        <strong><a href="/2018/11/18/you-should-use-you-should-use/">You Should Use You Should Use</a></strong>
-                      </h6>
-                    </div>
-                  </div>
                 
                   <div class="row">
                     <div class="col-sm-4 col-md-4 col-lg-4">
@@ -181,6 +120,19 @@ the event that anyone else clones it and if the script is passed the <code>-e</c
                     <div class="col-sm-8 col-md-8 col-lg-8">
                       <h6 style="text-align: left">
                         <strong><a href="/2018/03/25/my-zsh-setup/">My Zsh Setup</a></strong>
+                      </h6>
+                    </div>
+                  </div>
+                
+                  <div class="row">
+                    <div class="col-sm-4 col-md-4 col-lg-4">
+                      <h6 style="text-align: right">
+                        March 3, 2018
+                      </h6>
+                    </div>
+                    <div class="col-sm-8 col-md-8 col-lg-8">
+                      <h6 style="text-align: left">
+                        <strong><a href="/2018/03/03/hugo-markdown-setup/">Hugo Markdown Setup</a></strong>
                       </h6>
                     </div>
                   </div>

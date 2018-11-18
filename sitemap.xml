@@ -3,6 +3,16 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://jkomoroski.github.io/2018/11/18/you-should-use-you-should-use/</loc>
+    <lastmod>2018-11-18T13:06:35-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jkomoroski.github.io/2018/03/28/starting-task-warrior/</loc>
+    <lastmod>2018-03-28T19:19:28-06:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://jkomoroski.github.io/2018/03/25/my-zsh-setup/</loc>
     <lastmod>2018-03-25T14:19:49-06:00</lastmod>
   </url>
@@ -45,12 +55,18 @@
   
   <url>
     <loc>https://jkomoroski.github.io/blog/</loc>
-    <lastmod>2018-03-25T14:19:49-06:00</lastmod>
+    <lastmod>2018-11-18T13:06:35-07:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://jkomoroski.github.io/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jkomoroski.github.io/tags/cli/</loc>
+    <lastmod>2018-11-18T13:06:35-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -74,7 +90,7 @@
   
   <url>
     <loc>https://jkomoroski.github.io/</loc>
-    <lastmod>2018-03-25T14:19:49-06:00</lastmod>
+    <lastmod>2018-11-18T13:06:35-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -85,13 +101,13 @@
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/categories/projects/</loc>
+    <loc>https://jkomoroski.github.io/tags/projects/</loc>
     <lastmod>2016-10-02T22:55:05-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/tags/projects/</loc>
+    <loc>https://jkomoroski.github.io/categories/projects/</loc>
     <lastmod>2016-10-02T22:55:05-04:00</lastmod>
     <priority>0</priority>
   </url>
@@ -104,13 +120,31 @@
   
   <url>
     <loc>https://jkomoroski.github.io/tags/shell/</loc>
-    <lastmod>2018-03-25T14:19:49-06:00</lastmod>
+    <lastmod>2018-11-18T13:06:35-07:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://jkomoroski.github.io/tags/</loc>
     <lastmod>2018-02-20T21:10:29-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jkomoroski.github.io/tags/task-warrior/</loc>
+    <lastmod>2018-03-28T19:19:28-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jkomoroski.github.io/tags/taskwarrior/</loc>
+    <lastmod>2018-11-18T13:06:35-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jkomoroski.github.io/tags/ysu/</loc>
+    <lastmod>2018-11-18T13:06:35-07:00</lastmod>
     <priority>0</priority>
   </url>
   
