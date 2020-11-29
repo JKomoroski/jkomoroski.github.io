@@ -1,16 +1,12 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Task Warrior on Kasual Komoroski</title>
+    <title>task-warrior on Kasual Komoroski</title>
     <link>https://jkomoroski.github.io/tags/task-warrior/</link>
-    <description>Recent content in Task Warrior on Kasual Komoroski</description>
+    <description>Recent content in task-warrior on Kasual Komoroski</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Mar 2018 19:19:28 -0600</lastBuildDate>
-    
-	<atom:link href="https://jkomoroski.github.io/tags/task-warrior/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 28 Mar 2018 19:19:28 -0600</lastBuildDate><atom:link href="https://jkomoroski.github.io/tags/task-warrior/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Starting Task Warrior</title>
       <link>https://jkomoroski.github.io/2018/03/28/starting-task-warrior/</link>

@@ -8,7 +8,7 @@
     <meta name="description" content="A Technical Blog">
     <link rel="shortcut icon" type="image/x-icon" href="https://jkomoroski.github.io/img/favicon.ico">
     <title>You Should Use You Should Use</title>
-    <meta name="generator" content="Hugo 0.37" />
+    <meta name="generator" content="Hugo 0.75.1" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://jkomoroski.github.io/css/main.css" />
     <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
@@ -64,8 +64,6 @@
             
             <span class="label label-success">taskwarrior</span>
             
-            <span class="label label-success">ysu</span>
-            
             <span class="label label-success">cli</span>
             
           </h4>
@@ -75,28 +73,34 @@
             <div class="blogpost">
               <p>A while ago I installed a zsh plugin to remind me of my plugins called
 <a href="https://github.com/MichaelAquilina/zsh-you-should-use">You Should Use</a> (ysu). The idea behind it is fairly simple, if
-you have configured an alias for a given command, it will will remind you about that alias if you use the command
+you have configured an alias for a given command, it will remind you about that alias if you use the command
 directly, rather call it via the alias. For example, when I use task warrior to mark a task completed, I may type:</p>
-
 <pre><code>task 6 done
-</code></pre>
-
-<p>Since I have a zsh plugin with aliases for Task Warrior installed, ysu returns the following message before executing
+</code></pre><p>Since I have a zsh plugin with aliases for Task Warrior installed, ysu returns the following message before executing
 the command:</p>
-
-<pre><code> Found existing alias for &quot;task&quot;. You should use: &quot;t&quot;
-</code></pre>
-
-<p>This indicates that I could have used <code>t 6 done</code> to mark my sixth task as completed, saving a few key strokes. By
+<pre><code>Found existing alias for &quot;task&quot;. You should use: &quot;t&quot;
+</code></pre><p>This indicates that I could have used <code>t 6 done</code> to mark my sixth task as completed, saving a few key strokes. By
 default, the command then executes as normal. The plugin also has a hardcore mode that requires the use of existing
 aliases before executing a command.</p>
-
 <p>Turn your interactive shell into a more inviting place by adding ysu to it today. Start using those aliases you
-installed with plugins and forgot about or  or never knew about,</p>
+installed with plugins and forgot about or never knew about,</p>
 
               <hr>
               <div class="related-posts">
                 <h5>Related Posts</h5>
+                
+                  <div class="row">
+                    <div class="col-sm-4 col-md-4 col-lg-4">
+                      <h6 style="text-align: right">
+                        November 28, 2020
+                      </h6>
+                    </div>
+                    <div class="col-sm-8 col-md-8 col-lg-8">
+                      <h6 style="text-align: left">
+                        <strong><a href="/2020/11/28/simple-bash-templating/">Simple Bash Templating</a></strong>
+                      </h6>
+                    </div>
+                  </div>
                 
                   <div class="row">
                     <div class="col-sm-4 col-md-4 col-lg-4">
@@ -120,19 +124,6 @@ installed with plugins and forgot about or  or never knew about,</p>
                     <div class="col-sm-8 col-md-8 col-lg-8">
                       <h6 style="text-align: left">
                         <strong><a href="/2018/03/25/my-zsh-setup/">My Zsh Setup</a></strong>
-                      </h6>
-                    </div>
-                  </div>
-                
-                  <div class="row">
-                    <div class="col-sm-4 col-md-4 col-lg-4">
-                      <h6 style="text-align: right">
-                        March 3, 2018
-                      </h6>
-                    </div>
-                    <div class="col-sm-8 col-md-8 col-lg-8">
-                      <h6 style="text-align: left">
-                        <strong><a href="/2018/03/03/hugo-markdown-setup/">Hugo Markdown Setup</a></strong>
                       </h6>
                     </div>
                   </div>

@@ -8,7 +8,7 @@
     <meta name="description" content="A Technical Blog">
     <link rel="shortcut icon" type="image/x-icon" href="https://jkomoroski.github.io/img/favicon.ico">
     <title>Let&#39;s Talk Kubernetes Ingress</title>
-    <meta name="generator" content="Hugo 0.37" />
+    <meta name="generator" content="Hugo 0.75.1" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://jkomoroski.github.io/css/main.css" />
     <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
@@ -73,11 +73,8 @@
             <div class="blogpost">
               <p>If you don&rsquo;t know what <a href="https://kubernetes.io/">Kubernetes</a> is, I highly suggest to look into it. It&rsquo;s a container orchestration system that runs anywhere. In short, it takes the simple but powerful concept of a containerized application (popularized by <a href="https://www.docker.com/what-docker">docker</a>), and ramps it up to web scale levels. It allows you to deploy and manage hundreds or thousands of contaners without the pain of managing the VM and OS layers assocated with a normal
 deployment. But the purpose of this post is not to preach container orchestration. My goal here is to get more tactical about the topic and talk about a specific component of Kubernetes called an Ingress Controller.</p>
-
 <p>When I first started tinkering with my cluster, the most difficult piece of understanding what was going on was networking. Getting traffic into my cluser was not obvious from the start. There are some simple things you can set up like NodePort services, or if you&rsquo;re on a cloud provider, you may have access to LoadBalancer services. Since <a href="/2018/02/20/my-lab/">my lab</a> is in my basement, I started with simple NodePort services.</p>
-
 <p>These worked, especially given the learning curve needed for them. They gave me an easy win where I could get started without having to learn everything. Below is an example Nginx Replication Controller, accessable via a node port service:</p>
-
 <pre><code>---
 apiVersion: v1
 kind: ReplicationController
@@ -119,12 +116,8 @@ spec:
   selector:
     app: nginx
   type: NodePort
-</code></pre>
-
-<p>This sort of thing works, but if you want to route traffic directly to the cluster, you&rsquo;d need to route traffic to a non-standard port. Also, what if you want to host multiple sites from your cluster, it would require you to stand up a reverse proxy to address. This is where ingress controllers enter. If you want to route based on path, or a host header ingress rules and a controller can make this very easy.</p>
-
+</code></pre><p>This sort of thing works, but if you want to route traffic directly to the cluster, you&rsquo;d need to route traffic to a non-standard port. Also, what if you want to host multiple sites from your cluster, it would require you to stand up a reverse proxy to address. This is where ingress controllers enter. If you want to route based on path, or a host header ingress rules and a controller can make this very easy.</p>
 <p>There are several applications that can act as a kubernetes ingress controller, Nginx, HAProxy, Rancher, Traefik and many more can all serve this purpose. In my lab, I&rsquo;m runing <a href="https://traefik.io/">Traefik</a> as my ingress controller. I like that it&rsquo;s a very small containter with all the bells and whistles. To deploy it to my lab, I just needed to apply the following file to my cluster:</p>
-
 <pre><code>---
 apiVersion: v1
 kind: ServiceAccount
@@ -203,10 +196,7 @@ spec:
         args:
         - --api
         - --kubernetes
-</code></pre>
-
-<p>This sets up the role, role binding, account and the daemonset for the application. With that, you would be ready to start setting up ingress rules, and routes as you see fit. In my cluster, I want to be able to see the Traefik web ui. So Lets set up an ingress and service to the Traefik application itself.</p>
-
+</code></pre><p>This sets up the role, role binding, account and the daemonset for the application. With that, you would be ready to start setting up ingress rules, and routes as you see fit. In my cluster, I want to be able to see the Traefik web ui. So Lets set up an ingress and service to the Traefik application itself.</p>
 <pre><code>---
 apiVersion: v1
 kind: Service
@@ -235,12 +225,8 @@ spec:
       - backend:
           serviceName:  traefik-web-ui
           servicePort: 80
-</code></pre>
-
-<p>This defines a service for the traefik UI (serice port 80, container port 8080). It then defines an ingress rule that the controller will use to define an inbound route. In this case it&rsquo;s a reverse proxy rule, that takes the inbound traffic with a host header &ldquo;traefik.mydomain.tld&rdquo; and sends it to the traefik-web-ui on port 80. If you have a dns record (or hostfile entry) that points your browser to the cluster host IP, you&rsquo;ll get the following:</p>
-
-<p><img src="/img/traefik_ingress_ui.png" alt="Traefik_UI" style="width: 750px;"/></p>
-
+</code></pre><p>This defines a service for the traefik UI (serice port 80, container port 8080). It then defines an ingress rule that the controller will use to define an inbound route. In this case it&rsquo;s a reverse proxy rule, that takes the inbound traffic with a host header &ldquo;traefik.mydomain.tld&rdquo; and sends it to the traefik-web-ui on port 80. If you have a dns record (or hostfile entry) that points your browser to the cluster host IP, you&rsquo;ll get the following:</p>
+<img src="/img/traefik_ingress_ui.png" alt="Traefik_UI" style="width: 750px;"/>
 <p>And there you have it. A quick intro to Kubernetes Ingress!</p>
 
               <hr>
@@ -269,19 +255,6 @@ spec:
                     <div class="col-sm-8 col-md-8 col-lg-8">
                       <h6 style="text-align: left">
                         <strong><a href="/2018/03/03/hugo-markdown-setup/">Hugo Markdown Setup</a></strong>
-                      </h6>
-                    </div>
-                  </div>
-                
-                  <div class="row">
-                    <div class="col-sm-4 col-md-4 col-lg-4">
-                      <h6 style="text-align: right">
-                        February 20, 2018
-                      </h6>
-                    </div>
-                    <div class="col-sm-8 col-md-8 col-lg-8">
-                      <h6 style="text-align: left">
-                        <strong><a href="/2018/02/20/my-lab/">My Lab</a></strong>
                       </h6>
                     </div>
                   </div>

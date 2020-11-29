@@ -7,7 +7,7 @@
     <meta name="author" content="map[]" />
     <meta name="description" content="A Technical Blog">
     <link rel="shortcut icon" type="image/x-icon" href="https://jkomoroski.github.io/img/favicon.ico">
-    <title>Hugo Markdown Setup</title>
+    <title>Simple Bash Templating</title>
     <meta name="generator" content="Hugo 0.75.1" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://jkomoroski.github.io/css/main.css" />
@@ -52,105 +52,73 @@
       <div class="container">
         <div class="blog-post">
           <h3>
-            <strong><a href="https://jkomoroski.github.io/2018/03/03/hugo-markdown-setup/">Hugo Markdown Setup</a></strong>
+            <strong><a href="https://jkomoroski.github.io/2020/11/28/simple-bash-templating/">Simple Bash Templating</a></strong>
           </h3>
         </div>
         <div class="blog-title">
           <h4>
-          March 3, 2018
+          November 28, 2020
             &nbsp;&nbsp;
-            
-            <span class="label label-success">scripts</span>
             
             <span class="label label-success">shell</span>
             
-            <span class="label label-success">config</span>
+            <span class="label label-success">scripts</span>
             
           </h4>
         </div>
         <div class="panel panel-default">
           <div class="panel-body">
             <div class="blogpost">
-              <p>Now that I&rsquo;ve got my blog set up I thought I should share the set up I use script I use when writing blog posts (and maybe markdown pages in general).</p>
-<p>If you don&rsquo;t know what Hugo is, I suggest you <a href="https://gohugo.io">check it out</a>. At its core a static site generator that takes markdown files and compiles them into static html files, but it does so much more. Packaged with the file compiler is a webserver that uses websockets to support a live reload feature. What this means in practice is that if you have a text editor that has an auto save feature, you can simply start up the server and start writing a post and watch it reload
-in a broswer window.</p>
-<p>My text editor of choice is <a href="https://neovim.io/">Neovim</a>, which is a refactor of Vim. I like the ideas behind the project and have yet to come across any downsides of it compared to Vim. In order to enable autosave in the editor, I open a new file and enter the following while in command mode:</p>
-<p><code>autocmd TextChanged,TextChangedI &lt;buffer&gt; silent write</code></p>
-<p>My server start script is still a work in progress. The current form can be viewed in the blog&rsquo;s source code <a href="https://raw.githubusercontent.com/JKomoroski/HugoBlogSource/master/start_server">here</a>. Here&rsquo;s what it looks like today:</p>
-<pre><code>#!/bin/sh
+              <p>I needed to set up a project template which would be used to rapidly create many repositories with essentially the
+same skeleton boilerplate. I didn&rsquo;t need much more than simple find replace, and I didn&rsquo;t need the robust features
+of an entire templating engine &ndash; just something simple with little dependencies. No one will use a template if it
+takes hours to set up an environment to populate it. In my search, I came across great gnu util called
+<a href="https://www.gnu.org/software/gettext/manual/html_node/envsubst-Invocation.html">envsubst</a> which will replace any bash
+environment variables in a file and output the result to standard out. While similar functionality can be achieved
+with <code>sed</code>, the possibility of writing a bad regex and potentially mangling someone&rsquo;s files does not seem like a
+good time.</p>
+<p>Since <code>envsubst</code> seemed to fit my needs, required no configuration, and was trivial to install, I moved ahead with it
+and began writing a script to populate my template files with exported environment variables. However, I quickly came
+across a problem &ndash; <code>envsubst</code> doesn&rsquo;t support in place substitution, so the following results in an empty file:</p>
+<pre><code>envsubst &lt; &quot;$file&quot; &gt; &quot;$file&quot;
+</code></pre><p>My initial thought was to simply use <code>tee</code> to solve my troubles:</p>
+<pre><code>envsubst &lt; &quot;$file&quot; | tee &quot;$file&quot;
+</code></pre><p>While this command usually works, pipes are asynchronous so sometimes <code>tee</code> will truncate a file and <code>envsubst</code> will
+read the empty file. This script must be reliable and dependable when executed on someone else&rsquo;s machine. And since it
+must loop over an entire tree of template files, the chances of failure were too high.</p>
+<p>The Solution: Use a tmp file.</p>
+<pre><code>tmpfile=$(mktemp)
+cp -p &quot;./file&quot; &quot;$tmpfile&quot; # Maintain Permissions and Portability
+envsubst &lt; &quot;./file&quot; &gt; &quot;$tmpfile&quot; &amp;&amp;  mv &quot;$tmpfile&quot; &quot;./file&quot;
+</code></pre><p>It&rsquo;s not graceful or elegant, but it works. Performance isn&rsquo;t a primary concern.</p>
+<p>A practical example of this in action would be to write a yaml with some template variables:</p>
+<pre><code>---
+config:
+  setting: default
+  secondSetting: ${VAR)
+  thirdSetting: ${ANOTHER_VAR}
+</code></pre><p>This template config could be filled out with environment variables in the following script:</p>
+<pre><code>#!/usr/bin/env bash
 
-# Parse options for this script
-# Extensable for future additions
-BEGIN=true
-END=false
-while getopts &quot;eh?&quot; option
-do
-    case &quot;${option}&quot;
-        in
-        e)
-            BEGIN=false
-            END=true
-            ;;
-        h)
-            printf '%s\n' &quot;Use flag -e (end) to end development, default behavior starts development.&quot;
-            ;;
-        *)
-            printf '%s\n' &quot;Use flag -e (end) to end development, default behavior starts development.&quot;
-            ;;
-    esac
-done
+export VAR=foo
+export ANOTHER_VAR=bar
 
-if [ $BEGIN == true ]
-then
-    printf '%s\n' &quot;Beginning Development, Starting Hugo Server&quot; \
-    &amp;&amp; `hugo server -w -D -F --disableFastRender &gt;&gt; /dev/null &amp;` \
-    &amp;&amp; printf '%s\n' &quot;Hugo Server Started&quot; \
-    &amp;&amp; printf '%s\n' &quot;http://localhost:1313&quot;
-elif [ $END == true ]
-then
-    printf '%s\n' &quot;Stopping Hugo Server...&quot; \
-    &amp;&amp; killall hugo &gt;&gt; /dev/null \
-    &amp;&amp; printf '%s\n' &quot;Hugo Server Stopped!&quot;
-fi
-</code></pre><p>My goal with that script is to try to remain posix compliant in the script, so it will be portable to my future machines
-or to workstations other than my own. In brief, the script will start the hugo server in the current directory with a
-specific set of flags. It has a <code>-h</code> flag for help in the event that anyone else clones it and if the script is used
-with the <code>-e</code> flag it will end the current session. It&rsquo;s not the best bash script and there are better ways to do it,
-but it gets the job done.</p>
-<p>Unfortunately, I can&rsquo;t launch my browser of choice from the script at the time of start up because OSX and firefox
-don&rsquo;t play nice, so that piece is still manual at this time. However, I do echo the localhost hugo port, and use my
-terminal &ldquo;parse for url&rdquo; feature to simply open the blog on a new page.</p>
-<hr>
-<hr>
-<p>While getting this set up, I did find typing out the current date/time everytime I started a .md file from
-scratch tedious and annoying. I found this little gem of a command:</p>
-<p><code>:put =strftime('%FT%T%z')</code></p>
-<p>This outputs:</p>
-<p><code>2018-03-03T15:57:18-0700</code></p>
-<p>This does not work with hugo because it is not completely ISO 8601 compliant as the timezone offset should be colon
-delimited between the hour and minute offset. Your output may vary depending on the implementation of <code>strftime()</code>
-on your system. I found on my Linux system that the shell command <code>date +%FT%T%:z</code> works, so calling this from Nvim
-with proper escapes suits me: <code>r!date &quot;+\%FT\%T\%:z&quot;</code> .</p>
-<p>My system is using a BSD <code>strftime()</code> implementation with the had the following gem in the man page:</p>
-<pre><code>BUGS
-     There is no conversion specification for the phase of the moon.
-</code></pre>
+tmpfile=$(mktemp)
+cp -p &quot;./config.yml&quot; &quot;$tmpfile&quot;
+envsubst &lt; &quot;./config.yml&quot; &gt; &quot;$tmpfile&quot; &amp;&amp;  mv &quot;$tmpfile&quot; &quot;/config.yml&quot;
+</code></pre><p>Resulting output config:</p>
+<pre><code>---
+config:
+  setting: default
+  secondSetting: foo
+  thirdSetting: bar
+</code></pre><p>Happy templating!</p>
+<p><em>This is my take on the <a href="https://stackoverflow.com/questions/35078753/can-envsubst-not-do-in-place-substitution">Stack Overflow question</a>
+on the topic.</em></p>
+
               <hr>
               <div class="related-posts">
                 <h5>Related Posts</h5>
-                
-                  <div class="row">
-                    <div class="col-sm-4 col-md-4 col-lg-4">
-                      <h6 style="text-align: right">
-                        November 28, 2020
-                      </h6>
-                    </div>
-                    <div class="col-sm-8 col-md-8 col-lg-8">
-                      <h6 style="text-align: left">
-                        <strong><a href="/2020/11/28/simple-bash-templating/">Simple Bash Templating</a></strong>
-                      </h6>
-                    </div>
-                  </div>
                 
                   <div class="row">
                     <div class="col-sm-4 col-md-4 col-lg-4">
@@ -174,6 +142,19 @@ with proper escapes suits me: <code>r!date &quot;+\%FT\%T\%:z&quot;</code> .</p>
                     <div class="col-sm-8 col-md-8 col-lg-8">
                       <h6 style="text-align: left">
                         <strong><a href="/2018/03/28/starting-task-warrior/">Starting Task Warrior</a></strong>
+                      </h6>
+                    </div>
+                  </div>
+                
+                  <div class="row">
+                    <div class="col-sm-4 col-md-4 col-lg-4">
+                      <h6 style="text-align: right">
+                        March 25, 2018
+                      </h6>
+                    </div>
+                    <div class="col-sm-8 col-md-8 col-lg-8">
+                      <h6 style="text-align: left">
+                        <strong><a href="/2018/03/25/my-zsh-setup/">My Zsh Setup</a></strong>
                       </h6>
                     </div>
                   </div>

@@ -1,16 +1,12 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Homelab on Kasual Komoroski</title>
+    <title>homelab on Kasual Komoroski</title>
     <link>https://jkomoroski.github.io/tags/homelab/</link>
-    <description>Recent content in Homelab on Kasual Komoroski</description>
+    <description>Recent content in homelab on Kasual Komoroski</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 05 Mar 2018 20:10:31 -0700</lastBuildDate>
-    
-	<atom:link href="https://jkomoroski.github.io/tags/homelab/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 05 Mar 2018 20:10:31 -0700</lastBuildDate><atom:link href="https://jkomoroski.github.io/tags/homelab/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Let&#39;s Talk Kubernetes Ingress</title>
       <link>https://jkomoroski.github.io/2018/03/05/lets-talk-kubernetes-ingress/</link>
@@ -18,16 +14,6 @@
       
       <guid>https://jkomoroski.github.io/2018/03/05/lets-talk-kubernetes-ingress/</guid>
       <description>If you don&amp;rsquo;t know what Kubernetes is, I highly suggest to look into it. It&amp;rsquo;s a container orchestration system that runs anywhere. In short, it takes the simple but powerful concept of a containerized application (popularized by docker), and ramps it up to web scale levels. It allows you to deploy and manage hundreds or thousands of contaners without the pain of managing the VM and OS layers assocated with a normal deployment.</description>
-    </item>
-    
-    <item>
-      <title>My Lab</title>
-      <link>https://jkomoroski.github.io/2018/02/20/my-lab/</link>
-      <pubDate>Tue, 20 Feb 2018 21:10:29 -0700</pubDate>
-      
-      <guid>https://jkomoroski.github.io/2018/02/20/my-lab/</guid>
-      <description>Before I provide any guides on my various running projects, I feel the need to describe the lab that I have at my disposal. Today, the lab is very simple consisting of the following hardware components:
- Fiber to the Home 100Mb Connection NETGEAR Nighthawk AC1900 (R7000) Home Router Raspberry Pi 3 Home Server  Ubuntu 17.10 64bit Linux 4.13.0-32-generic Intel Core i7 CPU 860 @ 2.80GHz 16 Gb Ram 4Tb Storage  Workstation PC  Windows 10 Pro N Intel Core i7 CPU 4790K @ 4.</description>
     </item>
     
   </channel>

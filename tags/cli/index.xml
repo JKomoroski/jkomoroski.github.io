@@ -1,23 +1,19 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Cli on Kasual Komoroski</title>
+    <title>cli on Kasual Komoroski</title>
     <link>https://jkomoroski.github.io/tags/cli/</link>
-    <description>Recent content in Cli on Kasual Komoroski</description>
+    <description>Recent content in cli on Kasual Komoroski</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 18 Nov 2018 13:06:35 -0700</lastBuildDate>
-    
-	<atom:link href="https://jkomoroski.github.io/tags/cli/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sun, 18 Nov 2018 13:06:35 -0700</lastBuildDate><atom:link href="https://jkomoroski.github.io/tags/cli/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>You Should Use You Should Use</title>
       <link>https://jkomoroski.github.io/2018/11/18/you-should-use-you-should-use/</link>
       <pubDate>Sun, 18 Nov 2018 13:06:35 -0700</pubDate>
       
       <guid>https://jkomoroski.github.io/2018/11/18/you-should-use-you-should-use/</guid>
-      <description>A while ago I installed a zsh plugin to remind me of my plugins called You Should Use (ysu). The idea behind it is fairly simple, if you have configured an alias for a given command, it will will remind you about that alias if you use the command directly, rather call it via the alias. For example, when I use task warrior to mark a task completed, I may type:</description>
+      <description>A while ago I installed a zsh plugin to remind me of my plugins called You Should Use (ysu). The idea behind it is fairly simple, if you have configured an alias for a given command, it will remind you about that alias if you use the command directly, rather call it via the alias. For example, when I use task warrior to mark a task completed, I may type:</description>
     </item>
     
     <item>

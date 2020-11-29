@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Kasual Komoroski</title>
@@ -6,10 +6,15 @@
     <description>Recent content on Kasual Komoroski</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 18 Nov 2018 13:06:35 -0700</lastBuildDate>
-    
-	<atom:link href="https://jkomoroski.github.io/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Sat, 28 Nov 2020 00:20:21 -0700</lastBuildDate><atom:link href="https://jkomoroski.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Simple Bash Templating</title>
+      <link>https://jkomoroski.github.io/2020/11/28/simple-bash-templating/</link>
+      <pubDate>Sat, 28 Nov 2020 00:20:21 -0700</pubDate>
+      
+      <guid>https://jkomoroski.github.io/2020/11/28/simple-bash-templating/</guid>
+      <description>I needed to set up a project template which would be used to rapidly create many repositories with essentially the same skeleton boilerplate. I didn&amp;rsquo;t need much more than simple find replace, and I didn&amp;rsquo;t need the robust features of an entire templating engine &amp;ndash; just something simple with little dependencies. No one will use a template if it takes hours to set up an environment to populate it. In my search, I came across great gnu util called envsubst which will replace any bash environment variables in a file and output the result to standard out.</description>
+    </item>
     
     <item>
       <title>You Should Use You Should Use</title>
@@ -17,7 +22,7 @@
       <pubDate>Sun, 18 Nov 2018 13:06:35 -0700</pubDate>
       
       <guid>https://jkomoroski.github.io/2018/11/18/you-should-use-you-should-use/</guid>
-      <description>A while ago I installed a zsh plugin to remind me of my plugins called You Should Use (ysu). The idea behind it is fairly simple, if you have configured an alias for a given command, it will will remind you about that alias if you use the command directly, rather call it via the alias. For example, when I use task warrior to mark a task completed, I may type:</description>
+      <description>A while ago I installed a zsh plugin to remind me of my plugins called You Should Use (ysu). The idea behind it is fairly simple, if you have configured an alias for a given command, it will remind you about that alias if you use the command directly, rather call it via the alias. For example, when I use task warrior to mark a task completed, I may type:</description>
     </item>
     
     <item>
@@ -56,16 +61,6 @@ With simple commands like task ls, task add Task Name Here, and task 10 done, yo
       <guid>https://jkomoroski.github.io/2018/03/03/hugo-markdown-setup/</guid>
       <description>Now that I&amp;rsquo;ve got my blog set up I thought I should share the set up I use script I use when writing blog posts (and maybe markdown pages in general).
 If you don&amp;rsquo;t know what Hugo is, I suggest you check it out. At its core a static site generator that takes markdown files and compiles them into static html files, but it does so much more. Packaged with the file compiler is a webserver that uses websockets to support a live reload feature.</description>
-    </item>
-    
-    <item>
-      <title>My Lab</title>
-      <link>https://jkomoroski.github.io/2018/02/20/my-lab/</link>
-      <pubDate>Tue, 20 Feb 2018 21:10:29 -0700</pubDate>
-      
-      <guid>https://jkomoroski.github.io/2018/02/20/my-lab/</guid>
-      <description>Before I provide any guides on my various running projects, I feel the need to describe the lab that I have at my disposal. Today, the lab is very simple consisting of the following hardware components:
- Fiber to the Home 100Mb Connection NETGEAR Nighthawk AC1900 (R7000) Home Router Raspberry Pi 3 Home Server  Ubuntu 17.10 64bit Linux 4.13.0-32-generic Intel Core i7 CPU 860 @ 2.80GHz 16 Gb Ram 4Tb Storage  Workstation PC  Windows 10 Pro N Intel Core i7 CPU 4790K @ 4.</description>
     </item>
     
     <item>

@@ -1,15 +1,20 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Scripts on Kasual Komoroski</title>
+    <title>scripts on Kasual Komoroski</title>
     <link>https://jkomoroski.github.io/tags/scripts/</link>
-    <description>Recent content in Scripts on Kasual Komoroski</description>
+    <description>Recent content in scripts on Kasual Komoroski</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Mar 2018 15:57:18 -0700</lastBuildDate>
-    
-	<atom:link href="https://jkomoroski.github.io/tags/scripts/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Sat, 28 Nov 2020 00:20:21 -0700</lastBuildDate><atom:link href="https://jkomoroski.github.io/tags/scripts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Simple Bash Templating</title>
+      <link>https://jkomoroski.github.io/2020/11/28/simple-bash-templating/</link>
+      <pubDate>Sat, 28 Nov 2020 00:20:21 -0700</pubDate>
+      
+      <guid>https://jkomoroski.github.io/2020/11/28/simple-bash-templating/</guid>
+      <description>I needed to set up a project template which would be used to rapidly create many repositories with essentially the same skeleton boilerplate. I didn&amp;rsquo;t need much more than simple find replace, and I didn&amp;rsquo;t need the robust features of an entire templating engine &amp;ndash; just something simple with little dependencies. No one will use a template if it takes hours to set up an environment to populate it. In my search, I came across great gnu util called envsubst which will replace any bash environment variables in a file and output the result to standard out.</description>
+    </item>
     
     <item>
       <title>Hugo Markdown Setup</title>
