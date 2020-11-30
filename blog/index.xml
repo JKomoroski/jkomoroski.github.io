@@ -6,7 +6,17 @@
     <description>Recent content in Blogs on Kasual Komoroski</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Nov 2020 00:20:21 -0700</lastBuildDate><atom:link href="https://jkomoroski.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 29 Nov 2020 22:57:00 -0700</lastBuildDate><atom:link href="https://jkomoroski.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Junit 5 Parameter Resolver Extensions</title>
+      <link>https://jkomoroski.github.io/2020/11/29/junit-5-parameter-resolver-extensions/</link>
+      <pubDate>Sun, 29 Nov 2020 22:57:00 -0700</pubDate>
+      
+      <guid>https://jkomoroski.github.io/2020/11/29/junit-5-parameter-resolver-extensions/</guid>
+      <description>When writing tests in Junit 5, you should always strive to leverage the extension system to improve the easy composition of your tests. Extensions make your test classes more declarative, and make writing more tests easy. After lifecycle extensions, parameter resolver extensions are essential to developing a good test framework.
+Parameter resolvers are exactly that, an interface for resolving test parameters. These parameters can be test method parameters (@Test), test class constructor parameters, or test lifecycle method parameters (@BeforeEach, @AfterAll, etc).</description>
+    </item>
+    
     <item>
       <title>Simple Bash Templating</title>
       <link>https://jkomoroski.github.io/2020/11/28/simple-bash-templating/</link>
