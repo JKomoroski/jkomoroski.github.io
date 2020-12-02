@@ -22,7 +22,7 @@
       <pubDate>Sat, 03 Mar 2018 15:57:18 -0700</pubDate>
       
       <guid>https://jkomoroski.github.io/2018/03/03/hugo-markdown-setup/</guid>
-      <description>Now that I&amp;rsquo;ve got my blog set up I thought I should share the set up I use script I use when writing blog posts (and maybe markdown pages in general).
+      <description>Now with my blog set up, I thought I should share the set up I use script I use when writing blog posts (and maybe markdown pages in general).
 If you don&amp;rsquo;t know what Hugo is, I suggest you check it out. At its core a static site generator that takes markdown files and compiles them into static html files, but it does so much more. Packaged with the file compiler is a webserver that uses websockets to support a live reload feature.</description>
     </item>
     

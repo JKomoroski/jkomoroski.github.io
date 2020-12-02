@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="map[]" />
+    <meta name="description" content="A Technical Blog">
+    <link rel="shortcut icon" type="image/x-icon" href="https://jkomoroski.github.io/img/favicon.ico">
+    <title>Junit 5 Composed Annotations</title>
+    <meta name="generator" content="Hugo 0.75.1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://jkomoroski.github.io/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old" />
+    
+    <!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+    
+  </head>
+
+  <body>
+    <div id="wrap">
+
+      
+      <nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="https://jkomoroski.github.io/"><i class="fa fa-home"></i></a>
+    </div>
+    <div id="navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+        <li><a href="/blog/">BLOG</a></li>
+        
+        <li><a href="/projects/">PROJECTS</a></li>
+        
+        <li><a href="/about/">ABOUT</a></li>
+        
+      
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      
+      <div class="container">
+        <div class="blog-post">
+          <h3>
+            <strong><a href="https://jkomoroski.github.io/2020/12/01/junit-5-composed-annotations/">Junit 5 Composed Annotations</a></strong>
+          </h3>
+        </div>
+        <div class="blog-title">
+          <h4>
+          December 1, 2020
+            &nbsp;&nbsp;
+            
+            <span class="label label-success">java</span>
+            
+            <span class="label label-success">junit</span>
+            
+            <span class="label label-success">testing</span>
+            
+          </h4>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="blogpost">
+              <p>Junit 5 uses an extension system to support code reuse and clean code patterns. An important part of this is being able
+to register test extensions
+<a href="https://junit.org/junit5/docs/current/user-guide/#extensions-registration-declarative">declaratively</a>. Extension
+declarations can become quite cumbersome if they need to be repeated over and over again. For example:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">...</span>
+<span style="color:#a6e22e">@ExtendWith</span><span style="color:#f92672">(</span>MyFirstTestExtension<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">)</span>
+<span style="color:#a6e22e">@ExtendWith</span><span style="color:#f92672">(</span>MySecondTestExtension<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">)</span>
+<span style="color:#a6e22e">@ExtendWith</span><span style="color:#f92672">(</span>MyRequiredTestExtension<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">)</span>
+<span style="color:#a6e22e">@ExtendWith</span><span style="color:#f92672">(</span>MyParameterResolver<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyClassTest</span> <span style="color:#f92672">{</span>
+
+  <span style="color:#a6e22e">@Test</span>
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">myTestMethod</span><span style="color:#f92672">(</span>MyParameter myParam<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    assertNotNull<span style="color:#f92672">(</span>myParam<span style="color:#f92672">);</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>Or:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">...</span>
+ExtendWith<span style="color:#f92672">({</span>
+  MyFirstTestExtension<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">,</span>
+  MySecondTestExtension<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">,</span>
+  MyRequiredTestExtension<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">,</span>
+  MyParameterResolver<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span>
+<span style="color:#f92672">})</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyClassTest</span> <span style="color:#f92672">{</span>
+
+  <span style="color:#a6e22e">@Test</span>
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">myTestMethod</span><span style="color:#f92672">(</span>MyParameter myParam<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    assertNotNull<span style="color:#f92672">(</span>myParam<span style="color:#f92672">);</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>If you&rsquo;re working with many test classes, making sure all tests have all the right extensions can become an
+unwelcome chore &ndash; especially if you&rsquo;re adding and extending a framework and providing that framework as a consumable
+library. Composed annotations are the solution to this issue.</p>
+<p>Composed annotations are annotations which are themselves annotated. Allowing a single annotation to be used where many
+were required. Let&rsquo;s look at one in action:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">...</span>
+<span style="color:#a6e22e">@Target</span><span style="color:#f92672">({</span> ElementType<span style="color:#f92672">.</span><span style="color:#a6e22e">TYPE</span><span style="color:#f92672">,</span> ElementType<span style="color:#f92672">.</span><span style="color:#a6e22e">METHOD</span> <span style="color:#f92672">})</span>
+<span style="color:#a6e22e">@Retention</span><span style="color:#f92672">(</span>RetentionPolicy<span style="color:#f92672">.</span><span style="color:#a6e22e">RUNTIME</span><span style="color:#f92672">)</span>
+ExtendWith<span style="color:#f92672">({</span>
+  MyFirstTestExtension<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">,</span>
+  MySecondTestExtension<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">,</span>
+  MyRequiredTestExtension<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">,</span>
+  MyParameterResolver<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span>
+<span style="color:#f92672">})</span>
+ <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">@interface</span> MyComposedAnnotation <span style="color:#f92672">{</span>
+ <span style="color:#f92672">}</span>
+</code></pre></div><p>Using this annotation on a test class:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">...</span>
+<span style="color:#a6e22e">@MyComposedAnnotation</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyClassTest</span> <span style="color:#f92672">{</span>
+
+  <span style="color:#a6e22e">@Test</span>
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">myTestMethod</span><span style="color:#f92672">(</span>MyParameter myParam<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    assertNotNull<span style="color:#f92672">(</span>myParam<span style="color:#f92672">);</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>This cleans up the test boilerplate and eases the maintenance burden, but there&rsquo;s more to it. It also allows you to
+explicitly and easily manage the extension execution order of test extensions which depend on other test extensions.
+Extensions in the class reference array in a supplied <code>@ExtendWith()</code> are executed first to last for a given callback
+in the JUnit 5 <a href="https://junit.org/junit5/docs/current/user-guide/#extensions-execution-order-diagram">lifecycle</a>.</p>
+
+              <hr>
+              <div class="related-posts">
+                <h5>Related Posts</h5>
+                
+                  <div class="row">
+                    <div class="col-sm-4 col-md-4 col-lg-4">
+                      <h6 style="text-align: right">
+                        November 29, 2020
+                      </h6>
+                    </div>
+                    <div class="col-sm-8 col-md-8 col-lg-8">
+                      <h6 style="text-align: left">
+                        <strong><a href="/2020/11/29/junit-5-parameter-resolver-extensions/">Junit 5 Parameter Resolver Extensions</a></strong>
+                      </h6>
+                    </div>
+                  </div>
+                
+              </div>
+            </div>
+          </div>
+          <hr>
+        <div class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+
+    (function() {
+      
+      
+      if (window.location.hostname == "localhost")
+        return;
+
+      var disqus_shortname = 'kasualkomoroski';
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+        </div>
+      </div>
+      
+    </div>
+
+    
+    <footer>
+  <div id="footer">
+    <div class="container">
+      <p class="text-muted">&copy; Jared Komoroski. All rights reserved. Powered by <a href="https://gohugo.io/">Hugo</a> and
+      <a href="http://www.github.com/nurlansu/hugo-sustain/">sustain</a> with ♥</p>
+    </div>
+  </div>
+</footer>
+<div class="footer"></div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://jkomoroski.github.io/js/docs.min.js"></script>
+<script src="https://jkomoroski.github.io/js/main.js"></script>
+
+<script src="https://jkomoroski.github.io/js/ie10-viewport-bug-workaround.js"></script>
+
+
+    
+  </body>
+</html>

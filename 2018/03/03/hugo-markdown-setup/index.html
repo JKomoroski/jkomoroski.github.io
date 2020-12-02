@@ -71,9 +71,9 @@
         <div class="panel panel-default">
           <div class="panel-body">
             <div class="blogpost">
-              <p>Now that I&rsquo;ve got my blog set up I thought I should share the set up I use script I use when writing blog posts (and maybe markdown pages in general).</p>
+              <p>Now with my blog set up, I thought I should share the set up I use script I use when writing blog posts (and maybe markdown pages in general).</p>
 <p>If you don&rsquo;t know what Hugo is, I suggest you <a href="https://gohugo.io">check it out</a>. At its core a static site generator that takes markdown files and compiles them into static html files, but it does so much more. Packaged with the file compiler is a webserver that uses websockets to support a live reload feature. What this means in practice is that if you have a text editor that has an auto save feature, you can simply start up the server and start writing a post and watch it reload
-in a broswer window.</p>
+in a browser window.</p>
 <p>My text editor of choice is <a href="https://neovim.io/">Neovim</a>, which is a refactor of Vim. I like the ideas behind the project and have yet to come across any downsides of it compared to Vim. In order to enable autosave in the editor, I open a new file and enter the following while in command mode:</p>
 <p><code>autocmd TextChanged,TextChangedI &lt;buffer&gt; silent write</code></p>
 <p>My server start script is still a work in progress. The current form can be viewed in the blog&rsquo;s source code <a href="https://raw.githubusercontent.com/JKomoroski/HugoBlogSource/master/start_server">here</a>. Here&rsquo;s what it looks like today:</p>

@@ -6,7 +6,18 @@
     <description>Recent content in Blogs on Kasual Komoroski</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Nov 2020 22:57:00 -0700</lastBuildDate><atom:link href="https://jkomoroski.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 01 Dec 2020 17:16:39 -0700</lastBuildDate><atom:link href="https://jkomoroski.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Junit 5 Composed Annotations</title>
+      <link>https://jkomoroski.github.io/2020/12/01/junit-5-composed-annotations/</link>
+      <pubDate>Tue, 01 Dec 2020 17:16:39 -0700</pubDate>
+      
+      <guid>https://jkomoroski.github.io/2020/12/01/junit-5-composed-annotations/</guid>
+      <description>Junit 5 uses an extension system to support code reuse and clean code patterns. An important part of this is being able to register test extensions declaratively. Extension declarations can become quite cumbersome if they need to be repeated over and over again. For example:
+... @ExtendWith(MyFirstTestExtension.class) @ExtendWith(MySecondTestExtension.class) @ExtendWith(MyRequiredTestExtension.class) @ExtendWith(MyParameterResolver.class) class MyClassTest { @Test void myTestMethod(MyParameter myParam) { assertNotNull(myParam); } } Or:
+... ExtendWith({ MyFirstTestExtension.class, MySecondTestExtension.class, MyRequiredTestExtension.class, MyParameterResolver.class }) class MyClassTest { @Test void myTestMethod(MyParameter myParam) { assertNotNull(myParam); } } If you&amp;rsquo;re working with many test classes, making sure all tests have all the right extensions can become an unwelcome chore &amp;ndash; especially if you&amp;rsquo;re adding and extending a framework and providing that framework as a consumable library.</description>
+    </item>
+    
     <item>
       <title>Junit 5 Parameter Resolver Extensions</title>
       <link>https://jkomoroski.github.io/2020/11/29/junit-5-parameter-resolver-extensions/</link>
@@ -69,7 +80,7 @@ With simple commands like task ls, task add Task Name Here, and task 10 done, yo
       <pubDate>Sat, 03 Mar 2018 15:57:18 -0700</pubDate>
       
       <guid>https://jkomoroski.github.io/2018/03/03/hugo-markdown-setup/</guid>
-      <description>Now that I&amp;rsquo;ve got my blog set up I thought I should share the set up I use script I use when writing blog posts (and maybe markdown pages in general).
+      <description>Now with my blog set up, I thought I should share the set up I use script I use when writing blog posts (and maybe markdown pages in general).
 If you don&amp;rsquo;t know what Hugo is, I suggest you check it out. At its core a static site generator that takes markdown files and compiles them into static html files, but it does so much more. Packaged with the file compiler is a webserver that uses websockets to support a live reload feature.</description>
     </item>
     
