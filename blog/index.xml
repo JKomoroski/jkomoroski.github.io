@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Blogs on Kasual Komoroski</title>
-    <link>https://jkomoroski.github.io/blog/</link>
+    <link>https://blog.komoro.ski/blog/</link>
     <description>Recent content in Blogs on Kasual Komoroski</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 01 Dec 2020 17:16:39 -0700</lastBuildDate><atom:link href="https://jkomoroski.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 01 Dec 2020 17:16:39 -0700</lastBuildDate><atom:link href="https://blog.komoro.ski/blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Junit 5 Composed Annotations</title>
-      <link>https://jkomoroski.github.io/2020/12/01/junit-5-composed-annotations/</link>
+      <link>https://blog.komoro.ski/2020/12/01/junit-5-composed-annotations/</link>
       <pubDate>Tue, 01 Dec 2020 17:16:39 -0700</pubDate>
       
-      <guid>https://jkomoroski.github.io/2020/12/01/junit-5-composed-annotations/</guid>
+      <guid>https://blog.komoro.ski/2020/12/01/junit-5-composed-annotations/</guid>
       <description>Junit 5 uses an extension system to support code reuse and clean code patterns. An important part of this is being able to register test extensions declaratively. Extension declarations can become quite cumbersome if they need to be repeated over and over again. For example:
 ... @ExtendWith(MyFirstTestExtension.class) @ExtendWith(MySecondTestExtension.class) @ExtendWith(MyRequiredTestExtension.class) @ExtendWith(MyParameterResolver.class) class MyClassTest { @Test void myTestMethod(MyParameter myParam) { assertNotNull(myParam); } } Or:
 ... ExtendWith({ MyFirstTestExtension.class, MySecondTestExtension.class, MyRequiredTestExtension.class, MyParameterResolver.class }) class MyClassTest { @Test void myTestMethod(MyParameter myParam) { assertNotNull(myParam); } } If you&amp;rsquo;re working with many test classes, making sure all tests have all the right extensions can become an unwelcome chore &amp;ndash; especially if you&amp;rsquo;re adding and extending a framework and providing that framework as a consumable library.</description>
@@ -20,76 +20,76 @@
     
     <item>
       <title>Junit 5 Parameter Resolver Extensions</title>
-      <link>https://jkomoroski.github.io/2020/11/29/junit-5-parameter-resolver-extensions/</link>
+      <link>https://blog.komoro.ski/2020/11/29/junit-5-parameter-resolver-extensions/</link>
       <pubDate>Sun, 29 Nov 2020 22:57:00 -0700</pubDate>
       
-      <guid>https://jkomoroski.github.io/2020/11/29/junit-5-parameter-resolver-extensions/</guid>
+      <guid>https://blog.komoro.ski/2020/11/29/junit-5-parameter-resolver-extensions/</guid>
       <description>When writing tests in Junit 5, you should always strive to leverage the extension system to improve the easy composition of your tests. Extensions make your test classes more declarative, and make writing more tests easy. After lifecycle extensions, parameter resolver extensions are essential to developing a good test framework.
 Parameter resolvers are exactly that, an interface for resolving test parameters. These parameters can be test method parameters (@Test), test class constructor parameters, or test lifecycle method parameters (@BeforeEach, @AfterAll, etc).</description>
     </item>
     
     <item>
       <title>Simple Bash Templating</title>
-      <link>https://jkomoroski.github.io/2020/11/28/simple-bash-templating/</link>
+      <link>https://blog.komoro.ski/2020/11/28/simple-bash-templating/</link>
       <pubDate>Sat, 28 Nov 2020 00:20:21 -0700</pubDate>
       
-      <guid>https://jkomoroski.github.io/2020/11/28/simple-bash-templating/</guid>
+      <guid>https://blog.komoro.ski/2020/11/28/simple-bash-templating/</guid>
       <description>I needed to set up a project template which would be used to rapidly create many repositories with essentially the same skeleton boilerplate. I didn&amp;rsquo;t need much more than simple find replace, and I didn&amp;rsquo;t need the robust features of an entire templating engine &amp;ndash; just something simple with little dependencies. No one will use a template if it takes hours to set up an environment to populate it. In my search, I came across great gnu util called envsubst which will replace any bash environment variables in a file and output the result to standard out.</description>
     </item>
     
     <item>
       <title>You Should Use You Should Use</title>
-      <link>https://jkomoroski.github.io/2018/11/18/you-should-use-you-should-use/</link>
+      <link>https://blog.komoro.ski/2018/11/18/you-should-use-you-should-use/</link>
       <pubDate>Sun, 18 Nov 2018 13:06:35 -0700</pubDate>
       
-      <guid>https://jkomoroski.github.io/2018/11/18/you-should-use-you-should-use/</guid>
+      <guid>https://blog.komoro.ski/2018/11/18/you-should-use-you-should-use/</guid>
       <description>A while ago I installed a zsh plugin to remind me of my plugins called You Should Use (ysu). The idea behind it is fairly simple, if you have configured an alias for a given command, it will remind you about that alias if you use the command directly, rather call it via the alias. For example, when I use task warrior to mark a task completed, I may type:</description>
     </item>
     
     <item>
       <title>Starting Task Warrior</title>
-      <link>https://jkomoroski.github.io/2018/03/28/starting-task-warrior/</link>
+      <link>https://blog.komoro.ski/2018/03/28/starting-task-warrior/</link>
       <pubDate>Wed, 28 Mar 2018 19:19:28 -0600</pubDate>
       
-      <guid>https://jkomoroski.github.io/2018/03/28/starting-task-warrior/</guid>
+      <guid>https://blog.komoro.ski/2018/03/28/starting-task-warrior/</guid>
       <description>I&amp;rsquo;ve recently started using Task Warrior, a command line application that helps to track and manage your todo list.
 With simple commands like task ls, task add Task Name Here, and task 10 done, you can list, add, and complete tasks in your task list, but the application is built with flexibility in mind. There&amp;rsquo;s an optional backend server which serves an api that the cli and 3rd party applications can utilize, allowing cross platform task syncing across machines and devices.</description>
     </item>
     
     <item>
       <title>My Zsh Setup</title>
-      <link>https://jkomoroski.github.io/2018/03/25/my-zsh-setup/</link>
+      <link>https://blog.komoro.ski/2018/03/25/my-zsh-setup/</link>
       <pubDate>Sun, 25 Mar 2018 14:19:49 -0600</pubDate>
       
-      <guid>https://jkomoroski.github.io/2018/03/25/my-zsh-setup/</guid>
+      <guid>https://blog.komoro.ski/2018/03/25/my-zsh-setup/</guid>
       <description>I&amp;rsquo;m a big fan of my terminal and the cli I use everyday. A big reason for that is the customizations I use in it. I haven&amp;rsquo;t just settled on using the terminal as it comes out of the box, which has made it the most effective and productive tool I use everyday. I thought I should share some of those customizations here on my blog, and this first post is focused on Zsh.</description>
     </item>
     
     <item>
       <title>Let&#39;s Talk Kubernetes Ingress</title>
-      <link>https://jkomoroski.github.io/2018/03/05/lets-talk-kubernetes-ingress/</link>
+      <link>https://blog.komoro.ski/2018/03/05/lets-talk-kubernetes-ingress/</link>
       <pubDate>Mon, 05 Mar 2018 20:10:31 -0700</pubDate>
       
-      <guid>https://jkomoroski.github.io/2018/03/05/lets-talk-kubernetes-ingress/</guid>
+      <guid>https://blog.komoro.ski/2018/03/05/lets-talk-kubernetes-ingress/</guid>
       <description>If you don&amp;rsquo;t know what Kubernetes is, I highly suggest to look into it. It&amp;rsquo;s a container orchestration system that runs anywhere. In short, it takes the simple but powerful concept of a containerized application (popularized by docker), and ramps it up to web scale levels. It allows you to deploy and manage hundreds or thousands of contaners without the pain of managing the VM and OS layers assocated with a normal deployment.</description>
     </item>
     
     <item>
       <title>Hugo Markdown Setup</title>
-      <link>https://jkomoroski.github.io/2018/03/03/hugo-markdown-setup/</link>
+      <link>https://blog.komoro.ski/2018/03/03/hugo-markdown-setup/</link>
       <pubDate>Sat, 03 Mar 2018 15:57:18 -0700</pubDate>
       
-      <guid>https://jkomoroski.github.io/2018/03/03/hugo-markdown-setup/</guid>
+      <guid>https://blog.komoro.ski/2018/03/03/hugo-markdown-setup/</guid>
       <description>Now with my blog set up, I thought I should share the set up I use script I use when writing blog posts (and maybe markdown pages in general).
 If you don&amp;rsquo;t know what Hugo is, I suggest you check it out. At its core a static site generator that takes markdown files and compiles them into static html files, but it does so much more. Packaged with the file compiler is a webserver that uses websockets to support a live reload feature.</description>
     </item>
     
     <item>
       <title>Hello World!</title>
-      <link>https://jkomoroski.github.io/2018/02/17/hello-world/</link>
+      <link>https://blog.komoro.ski/2018/02/17/hello-world/</link>
       <pubDate>Sat, 17 Feb 2018 21:41:29 -0700</pubDate>
       
-      <guid>https://jkomoroski.github.io/2018/02/17/hello-world/</guid>
+      <guid>https://blog.komoro.ski/2018/02/17/hello-world/</guid>
       <description>This is my first post on my Hugo powered blog. My goal with this blog at this time is to document various technical guides to projects I&amp;rsquo;m currently involved in. Currently, my projects are fairly limited in scope, focused on a single node Kubernetes cluster run off a home server with various web applications and databases running on it. In the future, I hope to move from some of the more DevOps focused tasks I&amp;rsquo;m working on to more code-centric projects.</description>
     </item>
     

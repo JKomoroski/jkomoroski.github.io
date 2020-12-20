@@ -3,147 +3,147 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://jkomoroski.github.io/blog/</loc>
+    <loc>https://blog.komoro.ski/blog/</loc>
     <lastmod>2020-12-01T17:16:39-07:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/tags/java/</loc>
+    <loc>https://blog.komoro.ski/tags/java/</loc>
     <lastmod>2020-12-01T17:16:39-07:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/tags/junit/</loc>
+    <loc>https://blog.komoro.ski/tags/junit/</loc>
     <lastmod>2020-12-01T17:16:39-07:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/2020/12/01/junit-5-composed-annotations/</loc>
+    <loc>https://blog.komoro.ski/2020/12/01/junit-5-composed-annotations/</loc>
     <lastmod>2020-12-01T17:16:39-07:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/</loc>
+    <loc>https://blog.komoro.ski/</loc>
     <lastmod>2020-12-01T17:16:39-07:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/tags/</loc>
+    <loc>https://blog.komoro.ski/tags/</loc>
     <lastmod>2020-12-01T17:16:39-07:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/tags/testing/</loc>
+    <loc>https://blog.komoro.ski/tags/testing/</loc>
     <lastmod>2020-12-01T17:16:39-07:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/2020/11/29/junit-5-parameter-resolver-extensions/</loc>
+    <loc>https://blog.komoro.ski/2020/11/29/junit-5-parameter-resolver-extensions/</loc>
     <lastmod>2020-11-29T22:57:00-07:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/tags/scripts/</loc>
+    <loc>https://blog.komoro.ski/tags/scripts/</loc>
     <lastmod>2020-11-28T00:20:21-07:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/tags/shell/</loc>
+    <loc>https://blog.komoro.ski/tags/shell/</loc>
     <lastmod>2020-11-28T00:20:21-07:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/2020/11/28/simple-bash-templating/</loc>
+    <loc>https://blog.komoro.ski/2020/11/28/simple-bash-templating/</loc>
     <lastmod>2020-11-28T00:20:21-07:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/tags/cli/</loc>
+    <loc>https://blog.komoro.ski/tags/cli/</loc>
     <lastmod>2018-11-18T13:06:35-07:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/tags/taskwarrior/</loc>
+    <loc>https://blog.komoro.ski/tags/taskwarrior/</loc>
     <lastmod>2018-11-18T13:06:35-07:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/2018/11/18/you-should-use-you-should-use/</loc>
+    <loc>https://blog.komoro.ski/2018/11/18/you-should-use-you-should-use/</loc>
     <lastmod>2018-11-18T13:06:35-07:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/2018/03/28/starting-task-warrior/</loc>
+    <loc>https://blog.komoro.ski/2018/03/28/starting-task-warrior/</loc>
     <lastmod>2018-03-28T19:19:28-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/tags/task-warrior/</loc>
+    <loc>https://blog.komoro.ski/tags/task-warrior/</loc>
     <lastmod>2018-03-28T19:19:28-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/tags/config/</loc>
+    <loc>https://blog.komoro.ski/tags/config/</loc>
     <lastmod>2018-03-25T14:19:49-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/2018/03/25/my-zsh-setup/</loc>
+    <loc>https://blog.komoro.ski/2018/03/25/my-zsh-setup/</loc>
     <lastmod>2018-03-25T14:19:49-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/tags/homelab/</loc>
+    <loc>https://blog.komoro.ski/tags/homelab/</loc>
     <lastmod>2018-03-05T20:10:31-07:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/tags/kubernetes/</loc>
+    <loc>https://blog.komoro.ski/tags/kubernetes/</loc>
     <lastmod>2018-03-05T20:10:31-07:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/2018/03/05/lets-talk-kubernetes-ingress/</loc>
+    <loc>https://blog.komoro.ski/2018/03/05/lets-talk-kubernetes-ingress/</loc>
     <lastmod>2018-03-05T20:10:31-07:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/2018/03/03/hugo-markdown-setup/</loc>
+    <loc>https://blog.komoro.ski/2018/03/03/hugo-markdown-setup/</loc>
     <lastmod>2018-03-03T15:57:18-07:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/about/</loc>
+    <loc>https://blog.komoro.ski/about/</loc>
     <lastmod>2018-02-20T22:40:11-07:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/tags/about/</loc>
+    <loc>https://blog.komoro.ski/tags/about/</loc>
     <lastmod>2018-02-17T21:41:29-07:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/2018/02/17/hello-world/</loc>
+    <loc>https://blog.komoro.ski/2018/02/17/hello-world/</loc>
     <lastmod>2018-02-17T21:41:29-07:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/categories/</loc>
+    <loc>https://blog.komoro.ski/categories/</loc>
     <lastmod>2016-10-02T22:55:05-04:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/projects/</loc>
+    <loc>https://blog.komoro.ski/projects/</loc>
     <lastmod>2016-10-02T22:55:05-04:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/tags/projects/</loc>
+    <loc>https://blog.komoro.ski/tags/projects/</loc>
     <lastmod>2016-10-02T22:55:05-04:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jkomoroski.github.io/categories/projects/</loc>
+    <loc>https://blog.komoro.ski/categories/projects/</loc>
     <lastmod>2016-10-02T22:55:05-04:00</lastmod>
   </url>
   

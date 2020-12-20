@@ -2,10 +2,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>About Me on Kasual Komoroski</title>
-    <link>https://jkomoroski.github.io/about/</link>
+    <link>https://blog.komoro.ski/about/</link>
     <description>Recent content in About Me on Kasual Komoroski</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 20 Feb 2018 22:40:11 -0700</lastBuildDate><atom:link href="https://jkomoroski.github.io/about/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 20 Feb 2018 22:40:11 -0700</lastBuildDate><atom:link href="https://blog.komoro.ski/about/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
