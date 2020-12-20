@@ -1,81 +1,9 @@
-<!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="author" content="map[]" />
-    <meta name="description" content="A Technical Blog">
-    <link rel="shortcut icon" type="image/x-icon" href="https://blog.komoro.ski/img/favicon.ico">
-    <title>Let&#39;s Talk Kubernetes Ingress</title>
-    <meta name="generator" content="Hugo 0.75.1" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="https://blog.komoro.ski/css/main.css" />
-    <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old" />
-    
-    <!--[if lt IE 9]>
-			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-		<![endif]-->
-
-    
-  </head>
-
-  <body>
-    <div id="wrap">
-
-      
-      <nav class="navbar navbar-default">
-  <div class="container">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="https://blog.komoro.ski/"><i class="fa fa-home"></i></a>
-    </div>
-    <div id="navbar">
-      <ul class="nav navbar-nav navbar-right">
-      
-        
-        <li><a href="/blog/">BLOG</a></li>
-        
-        <li><a href="/projects/">PROJECTS</a></li>
-        
-        <li><a href="/about/">ABOUT</a></li>
-        
-      
-      </ul>
-    </div>
-  </div>
-</nav>
-
-      
-      <div class="container">
-        <div class="blog-post">
-          <h3>
-            <strong><a href="https://blog.komoro.ski/2018/03/05/lets-talk-kubernetes-ingress/">Let&#39;s Talk Kubernetes Ingress</a></strong>
-          </h3>
-        </div>
-        <div class="blog-title">
-          <h4>
-          March 5, 2018
-            &nbsp;&nbsp;
-            
-            <span class="label label-success">kubernetes</span>
-            
-            <span class="label label-success">homelab</span>
-            
-            <span class="label label-success">config</span>
-            
-          </h4>
-        </div>
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <div class="blogpost">
-              <p>If you don&rsquo;t know what <a href="https://kubernetes.io/">Kubernetes</a> is, I highly suggest to look into it. It&rsquo;s a container orchestration system that runs anywhere. In short, it takes the simple but powerful concept of a containerized application (popularized by <a href="https://www.docker.com/what-docker">docker</a>), and ramps it up to web scale levels. It allows you to deploy and manage hundreds or thousands of contaners without the pain of managing the VM and OS layers assocated with a normal
-deployment. But the purpose of this post is not to preach container orchestration. My goal here is to get more tactical about the topic and talk about a specific component of Kubernetes called an Ingress Controller.</p>
-<p>When I first started tinkering with my cluster, the most difficult piece of understanding what was going on was networking. Getting traffic into my cluser was not obvious from the start. There are some simple things you can set up like NodePort services, or if you&rsquo;re on a cloud provider, you may have access to LoadBalancer services. Since <a href="/2018/02/20/my-lab/">my lab</a> is in my basement, I started with simple NodePort services.</p>
-<p>These worked, especially given the learning curve needed for them. They gave me an easy win where I could get started without having to learn everything. Below is an example Nginx Replication Controller, accessable via a node port service:</p>
-<pre><code>---
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=author content="map[]"><meta name=description content="A Technical Blog"><link rel="shortcut icon" type=image/x-icon href=https://blog.komoro.ski/img/favicon.ico><title>Let's Talk Kubernetes Ingress</title><meta name=generator content="Hugo 0.75.1"><link rel=stylesheet href=https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css integrity=sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u crossorigin=anonymous><link rel=stylesheet type=text/css href=https://blog.komoro.ski/css/main.css><link rel=stylesheet type=text/css href=https://use.fontawesome.com/releases/v5.0.6/css/all.css><link rel=stylesheet type=text/css href=https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css><link rel=stylesheet type=text/css href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old"><!--[if lt IE 9]><script src=https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js></script><script src=https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js></script><![endif]--></head><body><div id=wrap><nav class="navbar navbar-default"><div class=container><div class=navbar-header><a class=navbar-brand href=https://blog.komoro.ski/><i class="fa fa-home"></i></a></div><div id=navbar><ul class="nav navbar-nav navbar-right"><li><a href=/blog/>BLOG</a></li><li><a href=/projects/>PROJECTS</a></li><li><a href=/about/>ABOUT</a></li></ul></div></div></nav><div class=container><div class=blog-post><h3><strong><a href=https://blog.komoro.ski/2018/03/05/lets-talk-kubernetes-ingress/>Let's Talk Kubernetes Ingress</a></strong></h3></div><div class=blog-title><h4>March 5, 2018
+&nbsp;&nbsp;
+<span class="label label-success">kubernetes</span>
+<span class="label label-success">homelab</span>
+<span class="label label-success">config</span></h4></div><div class="panel panel-default"><div class=panel-body><div class=blogpost><p>If you don&rsquo;t know what <a href=https://kubernetes.io/>Kubernetes</a> is, I highly suggest to look into it. It&rsquo;s a container orchestration system that runs anywhere. In short, it takes the simple but powerful concept of a containerized application (popularized by <a href=https://www.docker.com/what-docker>docker</a>), and ramps it up to web scale levels. It allows you to deploy and manage hundreds or thousands of contaners without the pain of managing the VM and OS layers assocated with a normal
+deployment. But the purpose of this post is not to preach container orchestration. My goal here is to get more tactical about the topic and talk about a specific component of Kubernetes called an Ingress Controller.</p><p>When I first started tinkering with my cluster, the most difficult piece of understanding what was going on was networking. Getting traffic into my cluser was not obvious from the start. There are some simple things you can set up like NodePort services, or if you&rsquo;re on a cloud provider, you may have access to LoadBalancer services. Since <a href=/2018/02/20/my-lab/>my lab</a> is in my basement, I started with simple NodePort services.</p><p>These worked, especially given the learning curve needed for them. They gave me an easy win where I could get started without having to learn everything. Below is an example Nginx Replication Controller, accessable via a node port service:</p><pre><code>---
 apiVersion: v1
 kind: ReplicationController
 metadata:
@@ -116,9 +44,7 @@ spec:
   selector:
     app: nginx
   type: NodePort
-</code></pre><p>This sort of thing works, but if you want to route traffic directly to the cluster, you&rsquo;d need to route traffic to a non-standard port. Also, what if you want to host multiple sites from your cluster, it would require you to stand up a reverse proxy to address. This is where ingress controllers enter. If you want to route based on path, or a host header ingress rules and a controller can make this very easy.</p>
-<p>There are several applications that can act as a kubernetes ingress controller, Nginx, HAProxy, Rancher, Traefik and many more can all serve this purpose. In my lab, I&rsquo;m runing <a href="https://traefik.io/">Traefik</a> as my ingress controller. I like that it&rsquo;s a very small containter with all the bells and whistles. To deploy it to my lab, I just needed to apply the following file to my cluster:</p>
-<pre><code>---
+</code></pre><p>This sort of thing works, but if you want to route traffic directly to the cluster, you&rsquo;d need to route traffic to a non-standard port. Also, what if you want to host multiple sites from your cluster, it would require you to stand up a reverse proxy to address. This is where ingress controllers enter. If you want to route based on path, or a host header ingress rules and a controller can make this very easy.</p><p>There are several applications that can act as a kubernetes ingress controller, Nginx, HAProxy, Rancher, Traefik and many more can all serve this purpose. In my lab, I&rsquo;m runing <a href=https://traefik.io/>Traefik</a> as my ingress controller. I like that it&rsquo;s a very small containter with all the bells and whistles. To deploy it to my lab, I just needed to apply the following file to my cluster:</p><pre><code>---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -196,8 +122,7 @@ spec:
         args:
         - --api
         - --kubernetes
-</code></pre><p>This sets up the role, role binding, account and the daemonset for the application. With that, you would be ready to start setting up ingress rules, and routes as you see fit. In my cluster, I want to be able to see the Traefik web ui. So Lets set up an ingress and service to the Traefik application itself.</p>
-<pre><code>---
+</code></pre><p>This sets up the role, role binding, account and the daemonset for the application. With that, you would be ready to start setting up ingress rules, and routes as you see fit. In my cluster, I want to be able to see the Traefik web ui. So Lets set up an ingress and service to the Traefik application itself.</p><pre><code>---
 apiVersion: v1
 kind: Service
 metadata:
@@ -225,89 +150,5 @@ spec:
       - backend:
           serviceName:  traefik-web-ui
           servicePort: 80
-</code></pre><p>This defines a service for the traefik UI (serice port 80, container port 8080). It then defines an ingress rule that the controller will use to define an inbound route. In this case it&rsquo;s a reverse proxy rule, that takes the inbound traffic with a host header &ldquo;traefik.mydomain.tld&rdquo; and sends it to the traefik-web-ui on port 80. If you have a dns record (or hostfile entry) that points your browser to the cluster host IP, you&rsquo;ll get the following:</p>
-<img src="/img/traefik_ingress_ui.png" alt="Traefik_UI" style="width: 750px;"/>
-<p>And there you have it. A quick intro to Kubernetes Ingress!</p>
-
-              <hr>
-              <div class="related-posts">
-                <h5>Related Posts</h5>
-                
-                  <div class="row">
-                    <div class="col-sm-4 col-md-4 col-lg-4">
-                      <h6 style="text-align: right">
-                        March 25, 2018
-                      </h6>
-                    </div>
-                    <div class="col-sm-8 col-md-8 col-lg-8">
-                      <h6 style="text-align: left">
-                        <strong><a href="/2018/03/25/my-zsh-setup/">My Zsh Setup</a></strong>
-                      </h6>
-                    </div>
-                  </div>
-                
-                  <div class="row">
-                    <div class="col-sm-4 col-md-4 col-lg-4">
-                      <h6 style="text-align: right">
-                        March 3, 2018
-                      </h6>
-                    </div>
-                    <div class="col-sm-8 col-md-8 col-lg-8">
-                      <h6 style="text-align: left">
-                        <strong><a href="/2018/03/03/hugo-markdown-setup/">Hugo Markdown Setup</a></strong>
-                      </h6>
-                    </div>
-                  </div>
-                
-              </div>
-            </div>
-          </div>
-          <hr>
-        <div class="disqus">
-  <div id="disqus_thread"></div>
-  <script type="text/javascript">
-
-    (function() {
-      
-      
-      if (window.location.hostname == "localhost")
-        return;
-
-      var disqus_shortname = 'kasualkomoroski';
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-  </script>
-  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-  <a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</div>
-        </div>
-      </div>
-      
-    </div>
-
-    
-    <footer>
-  <div id="footer">
-    <div class="container">
-      <p class="text-muted">&copy; Jared Komoroski. All rights reserved. Powered by <a href="https://gohugo.io/">Hugo</a> and
-      <a href="http://www.github.com/nurlansu/hugo-sustain/">sustain</a> with ♥</p>
-    </div>
-  </div>
-</footer>
-<div class="footer"></div>
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script src="https://blog.komoro.ski/js/docs.min.js"></script>
-<script src="https://blog.komoro.ski/js/main.js"></script>
-
-<script src="https://blog.komoro.ski/js/ie10-viewport-bug-workaround.js"></script>
-
-
-    
-  </body>
-</html>
+</code></pre><p>This defines a service for the traefik UI (serice port 80, container port 8080). It then defines an ingress rule that the controller will use to define an inbound route. In this case it&rsquo;s a reverse proxy rule, that takes the inbound traffic with a host header &ldquo;traefik.mydomain.tld&rdquo; and sends it to the traefik-web-ui on port 80. If you have a dns record (or hostfile entry) that points your browser to the cluster host IP, you&rsquo;ll get the following:</p><img src=/img/traefik_ingress_ui.png alt=Traefik_UI style=width:750px><p>And there you have it. A quick intro to Kubernetes Ingress!</p><hr><div class=related-posts><h5>Related Posts</h5><div class=row><div class="col-sm-4 col-md-4 col-lg-4"><h6 style=text-align:right>March 25, 2018</h6></div><div class="col-sm-8 col-md-8 col-lg-8"><h6 style=text-align:left><strong><a href=/2018/03/25/my-zsh-setup/>My Zsh Setup</a></strong></h6></div></div><div class=row><div class="col-sm-4 col-md-4 col-lg-4"><h6 style=text-align:right>March 3, 2018</h6></div><div class="col-sm-8 col-md-8 col-lg-8"><h6 style=text-align:left><strong><a href=/2018/03/03/hugo-markdown-setup/>Hugo Markdown Setup</a></strong></h6></div></div></div></div></div><hr><div class=disqus><div id=disqus_thread></div><script type=text/javascript>!function(){var b,a;if(window.location.hostname=="localhost")return;b='kasualkomoroski',a=document.createElement('script'),a.type='text/javascript',a.async=!0,a.src='//'+b+'.disqus.com/embed.js',(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(a)}()</script><noscript>Please enable JavaScript to view the <a href=http://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=http://disqus.com/ class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div></div></div></div><footer><div id=footer><div class=container><p class=text-muted>&copy; Jared Komoroski. All rights reserved. Powered by <a href=https://gohugo.io/>Hugo</a> and
+<a href=http://www.github.com/nurlansu/hugo-sustain/>sustain</a> with ♥</p></div></div></footer><div class=footer></div><script src=https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js></script><script src=https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js integrity=sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa crossorigin=anonymous></script><script src=https://blog.komoro.ski/js/docs.min.js></script><script src=https://blog.komoro.ski/js/main.js></script><script src=https://blog.komoro.ski/js/ie10-viewport-bug-workaround.js></script></body></html>
