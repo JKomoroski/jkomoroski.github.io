@@ -1,0 +1,86 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=author content="map[]"><meta name=description content="A Technical Blog"><link rel=apple-touch-icon sizes=180x180 href=https://blog.komoro.ski/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=https://blog.komoro.ski/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=https://blog.komoro.ski/favicon-16x16.png><link rel=manifest href=https://blog.komoro.ski//site.webmanifest><title></title><meta name=generator content="Hugo 0.75.1"><link rel=stylesheet href=https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css integrity=sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u crossorigin=anonymous><link rel=stylesheet type=text/css href=https://blog.komoro.ski/css/main.css><link rel=stylesheet type=text/css href=https://use.fontawesome.com/releases/v5.0.6/css/all.css><link rel=stylesheet type=text/css href=https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css><link rel=stylesheet type=text/css href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old"><!--[if lt IE 9]><script src=https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js></script><script src=https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js></script><![endif]--></head><body><div id=wrap><nav class="navbar navbar-default"><div class=container><div class=navbar-header><a class=navbar-brand href=https://blog.komoro.ski/><i class="fa fa-home"></i></a></div><div id=navbar><ul class="nav navbar-nav navbar-right"><li><a href=/blog/>BLOG</a></li><li><a href=/projects/>PROJECTS</a></li><li><a href=/about/>ABOUT</a></li></ul></div></div></nav><div class=container><div class=blog-post><h3><strong><a href=https://blog.komoro.ski/1/01/01/></a></strong></h3></div><div class=blog-title><h4>January 1, 0001
+&nbsp;&nbsp;</h4></div><div class="panel panel-default"><div class=panel-body><div class=blogpost><h2 id=draft-false>, :&mdash;
+title: &ldquo;Junit 5 Parameter Resolver Extensions&rdquo;
+date: 2020-11-29T22:57:00-07:00
+tags: [java, junit, testing]
+draft: false</h2><p>When writing tests in <a href=https://junit.org/junit5/docs/current/user-guide/>Junit 5</a>, you should always strive to
+leverage the extension system to improve the easy composition of your tests. Extensions make your test classes more
+declarative, and make writing more tests easy. After <a href=https://junit.org/junit5/docs/current/user-guide/#extensions-lifecycle-callbacks>lifecycle</a>
+extensions, <a href=https://junit.org/junit5/docs/current/user-guide/#extensions-parameter-resolution>parameter resolver</a>
+extensions are essential to developing a good test framework.</p><p>Parameter resolvers are exactly that, an interface for resolving test parameters. These parameters can be test method
+parameters (<code>@Test</code>), test class constructor parameters, or test lifecycle method parameters (<code>@BeforeEach</code>,
+<code>@AfterAll</code>, etc). Let me provide an example of a parameter resolver implemenation:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#f92672>...</span>
+<span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>MyParameterResolver</span> <span style=color:#66d9ef>implements</span> ParameterResolver <span style=color:#f92672>{</span>
+        
+        <span style=color:#a6e22e>@Override</span>
+        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>boolean</span> <span style=color:#a6e22e>supportsParameter</span><span style=color:#f92672>(</span>ParameterContext parameterContext<span style=color:#f92672>,</span> ExtensionContext extensionContext<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
+            <span style=color:#66d9ef>return</span> MyParameter<span style=color:#f92672>.</span><span style=color:#a6e22e>class</span><span style=color:#f92672>.</span><span style=color:#a6e22e>isAssignableFrom</span><span style=color:#f92672>(</span>parameterContext<span style=color:#f92672>.</span><span style=color:#a6e22e>getParameter</span><span style=color:#f92672>().</span><span style=color:#a6e22e>getType</span><span style=color:#f92672>());</span>
+        <span style=color:#f92672>}</span>
+
+        <span style=color:#a6e22e>@Override</span>
+        <span style=color:#66d9ef>public</span> MyParameter <span style=color:#a6e22e>resolveParameter</span><span style=color:#f92672>(</span>ParameterContext parameterContext<span style=color:#f92672>,</span> ExtensionContext extensionContext<span style=color:#f92672>)</span> <span style=color:#f92672>{</span> 
+            <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>new</span> MyParameter<span style=color:#f92672>();</span>
+        <span style=color:#f92672>}</span>
+
+<span style=color:#f92672>}</span>
+</code></pre></div><p>For simple parameter resolvers like the one provided above, Junit 5 (since version 5.6.0) has provided an abstract class
+<a href=https://github.com/junit-team/junit5/blob/r5.7.0/junit-jupiter-api/src/main/java/org/junit/jupiter/api/extension/support/TypeBasedParameterResolver.java>TypeBasedParameterResolver</a>,
+which can be extended to simplify a safe parameter resolver where only the Type matters. This feature has an
+experimental flag at the time of this writing. In the following example you can see it simplifies the boiler plate of
+the extension:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>MyParameterResolver</span> <span style=color:#66d9ef>extends</span> TypeBasedParameterResolver<span style=color:#f92672>&lt;</span>MyParameter<span style=color:#f92672>&gt;</span> <span style=color:#f92672>{</span>
+        
+        <span style=color:#a6e22e>@Override</span>
+        <span style=color:#66d9ef>public</span> MyParameter <span style=color:#a6e22e>resolveParameter</span><span style=color:#f92672>(</span>ParameterContext parameterContext<span style=color:#f92672>,</span> ExtensionContext extensionContext<span style=color:#f92672>)</span> <span style=color:#f92672>{</span> 
+            <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>new</span> MyParameter<span style=color:#f92672>();</span>
+        <span style=color:#f92672>}</span>
+
+<span style=color:#f92672>}</span>
+
+</code></pre></div><p>With the extension demonstrated above, here is an associated test class:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#f92672>...</span>
+<span style=color:#a6e22e>@ExtendWith</span><span style=color:#f92672>(</span>MyParameterResolver<span style=color:#f92672>.</span><span style=color:#a6e22e>class</span><span style=color:#f92672>)</span>
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>MyClassTest</span> <span style=color:#f92672>{</span>
+    
+    <span style=color:#a6e22e>@Test</span>
+    <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>myTestMethod</span><span style=color:#f92672>(</span>MyParameter myParam<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
+        org<span style=color:#f92672>.</span><span style=color:#a6e22e>junit</span><span style=color:#f92672>.</span><span style=color:#a6e22e>jupiter</span><span style=color:#f92672>.</span><span style=color:#a6e22e>api</span><span style=color:#f92672>.</span><span style=color:#a6e22e>Assertions</span><span style=color:#f92672>.</span><span style=color:#a6e22e>assertNotNull</span><span style=color:#f92672>(</span>myParam<span style=color:#f92672>);</span>
+    <span style=color:#f92672>}</span>
+<span style=color:#f92672>}</span>
+</code></pre></div><p>It&rsquo;s just as easy to use the parameter in other supported cases:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#f92672>...</span>
+<span style=color:#a6e22e>@ExtendWith</span><span style=color:#f92672>(</span>MyParameterResolver<span style=color:#f92672>.</span><span style=color:#a6e22e>class</span><span style=color:#f92672>)</span>
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>MyClassTest</span> <span style=color:#f92672>{</span>
+
+    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> MyParameter classField<span style=color:#f92672>;</span>
+
+    MyClassTest<span style=color:#f92672>(</span>MyParameter myConstructorParam<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
+        <span style=color:#66d9ef>this</span><span style=color:#f92672>.</span><span style=color:#a6e22e>classField</span> <span style=color:#f92672>=</span> myConstructorParam<span style=color:#f92672>;</span>
+    <span style=color:#f92672>}</span>
+
+    <span style=color:#a6e22e>@BeforeEach</span>
+    <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>setup</span><span style=color:#f92672>(</span>MyParameter myLifeCycleMethodParameter<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
+        org<span style=color:#f92672>.</span><span style=color:#a6e22e>junit</span><span style=color:#f92672>.</span><span style=color:#a6e22e>jupiter</span><span style=color:#f92672>.</span><span style=color:#a6e22e>api</span><span style=color:#f92672>.</span><span style=color:#a6e22e>Assumptions</span><span style=color:#f92672>.</span><span style=color:#a6e22e>assumeTrue</span><span style=color:#f92672>(</span>myLifeCycleMethodParameter <span style=color:#f92672>!=</span> <span style=color:#66d9ef>null</span><span style=color:#f92672>);</span>
+    <span style=color:#f92672>}</span>
+    
+    <span style=color:#a6e22e>@Test</span>
+    <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>myTestMethod</span><span style=color:#f92672>()</span> <span style=color:#f92672>{</span>
+        org<span style=color:#f92672>.</span><span style=color:#a6e22e>junit</span><span style=color:#f92672>.</span><span style=color:#a6e22e>jupiter</span><span style=color:#f92672>.</span><span style=color:#a6e22e>api</span><span style=color:#f92672>.</span><span style=color:#a6e22e>Assertions</span><span style=color:#f92672>.</span><span style=color:#a6e22e>assertNotNull</span><span style=color:#f92672>(</span>classField<span style=color:#f92672>);</span>
+    <span style=color:#f92672>}</span>
+<span style=color:#f92672>}</span>
+</code></pre></div><p>These are contrived examples, but they should give a clear idea of how to get a parameter resolver to work for you. In
+my day to day work, I like to go a bit further to write declarative test classes rapidly, I leverage
+<a href=https://projectlombok.org/>Project Lombok</a> in my test classes to eliminate my boilerplate. Specifically, I tend to
+use the <a href=https://projectlombok.org/features/constructor>@RequiredArgsConstructor</a> annotation to cut the constructor
+from the test class.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#f92672>...</span>
+<span style=color:#a6e22e>@ExtendWith</span><span style=color:#f92672>(</span>MyParameterResolver<span style=color:#f92672>.</span><span style=color:#a6e22e>class</span><span style=color:#f92672>)</span>
+<span style=color:#a6e22e>@RequiredArgsConstructor</span>
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>MyClassTest</span> <span style=color:#f92672>{</span>
+
+    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> MyParameter classField<span style=color:#f92672>;</span>
+    
+    <span style=color:#a6e22e>@Test</span>
+    <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>myTestMethod</span><span style=color:#f92672>()</span> <span style=color:#f92672>{</span>
+        org<span style=color:#f92672>.</span><span style=color:#a6e22e>junit</span><span style=color:#f92672>.</span><span style=color:#a6e22e>jupiter</span><span style=color:#f92672>.</span><span style=color:#a6e22e>api</span><span style=color:#f92672>.</span><span style=color:#a6e22e>Assertions</span><span style=color:#f92672>.</span><span style=color:#a6e22e>assertNotNull</span><span style=color:#f92672>(</span>classField<span style=color:#f92672>);</span>
+    <span style=color:#f92672>}</span>
+<span style=color:#f92672>}</span>
+</code></pre></div><p>When working with Junit 5, and particularly when developing a testing framework, working with parameter resolvers
+should be second nature.</p><hr><div class=related-posts><h5>Related Posts</h5></div></div></div><hr><div class=disqus><div id=disqus_thread></div><script type=text/javascript>!function(){var b,a;if(window.location.hostname=="localhost")return;b='kasualkomoroski',a=document.createElement('script'),a.type='text/javascript',a.async=!0,a.src='//'+b+'.disqus.com/embed.js',(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(a)}()</script><noscript>Please enable JavaScript to view the <a href=http://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=http://disqus.com/ class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div></div></div></div><footer><div id=footer><div class=container><p class=text-muted>&copy; Jared Komoroski. All rights reserved. Powered by <a href=https://gohugo.io/>Hugo</a> and
+<a href=http://www.github.com/nurlansu/hugo-sustain/>sustain</a> with ♥</p></div></div></footer><div class=footer></div><script src=https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js></script><script src=https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js integrity=sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa crossorigin=anonymous></script><script src=https://blog.komoro.ski/js/docs.min.js></script><script src=https://blog.komoro.ski/js/main.js></script><script src=https://blog.komoro.ski/js/ie10-viewport-bug-workaround.js></script></body></html>
