@@ -37,7 +37,7 @@ library. Composed annotations are the solution to this issue.</p><p>Composed ann
 were required. Let&rsquo;s look at one in action:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#f92672>...</span>
 <span style=color:#a6e22e>@Target</span><span style=color:#f92672>({</span> ElementType<span style=color:#f92672>.</span><span style=color:#a6e22e>TYPE</span><span style=color:#f92672>,</span> ElementType<span style=color:#f92672>.</span><span style=color:#a6e22e>METHOD</span> <span style=color:#f92672>})</span>
 <span style=color:#a6e22e>@Retention</span><span style=color:#f92672>(</span>RetentionPolicy<span style=color:#f92672>.</span><span style=color:#a6e22e>RUNTIME</span><span style=color:#f92672>)</span>
-ExtendWith<span style=color:#f92672>({</span>
+<span style=color:#a6e22e>@ExtendWith</span><span style=color:#f92672>({</span>
   MyFirstTestExtension<span style=color:#f92672>.</span><span style=color:#a6e22e>class</span><span style=color:#f92672>,</span>
   MySecondTestExtension<span style=color:#f92672>.</span><span style=color:#a6e22e>class</span><span style=color:#f92672>,</span>
   MyRequiredTestExtension<span style=color:#f92672>.</span><span style=color:#a6e22e>class</span><span style=color:#f92672>,</span>
