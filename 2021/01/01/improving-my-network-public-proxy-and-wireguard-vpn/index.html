@@ -1,0 +1,120 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=author content="map[]"><meta name=description content="A Technical Blog"><link rel=apple-touch-icon sizes=180x180 href=https://blog.komoro.ski/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=https://blog.komoro.ski/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=https://blog.komoro.ski/favicon-16x16.png><link rel=manifest href=https://blog.komoro.ski//site.webmanifest><title>Improving My Network: Public Proxy and Wireguard VPN</title><meta name=generator content="Hugo 0.75.1"><link rel=stylesheet href=https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css integrity=sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u crossorigin=anonymous><link rel=stylesheet type=text/css href=https://blog.komoro.ski/css/main.css><link rel=stylesheet type=text/css href=https://use.fontawesome.com/releases/v5.0.6/css/all.css><link rel=stylesheet type=text/css href=https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css><link rel=stylesheet type=text/css href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old"><!--[if lt IE 9]><script src=https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js></script><script src=https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js></script><![endif]--></head><body><div id=wrap><nav class="navbar navbar-default"><div class=container><div class=navbar-header><a class=navbar-brand href=https://blog.komoro.ski/><i class="fa fa-home"></i></a></div><div id=navbar><ul class="nav navbar-nav navbar-right"><li><a href=/blog/>BLOG</a></li><li><a href=/projects/>PROJECTS</a></li><li><a href=/about/>ABOUT</a></li></ul></div></div></nav><div class=container><div class=blog-post><h3><strong><a href=https://blog.komoro.ski/2021/01/01/improving-my-network-public-proxy-and-wireguard-vpn/>Improving My Network: Public Proxy and Wireguard VPN</a></strong></h3></div><div class=blog-title><h4>January 1, 2021
+&nbsp;&nbsp;
+<span class="label label-success">network</span>
+<span class="label label-success">devember</span>
+<span class="label label-success">linode</span>
+<span class="label label-success">vpn</span>
+<span class="label label-success">homelab</span></h4></div><div class="panel panel-default"><div class=panel-body><div class=blogpost><p>This is the third part in my series on taking the <a href=https://forum.level1techs.com/t/welcome-to-level1-devember/162269>Devember challenge</a>
+and improving my homelab and network. You can find the previous post <a href=https://blog.komoro.ski/2020/12/22/improving-my-network-domains-and-dns/>here</a>.</p><h3 id=unifi-dream-machine-pro-problems>Unifi Dream Machine Pro Problems</h3><p>I upgraded my router to a Unifi Dream Machine Pro over the summer, which has treated me well, but running custom
+scripts and applications on the box has been a challenge because the UDM Pro will wipe out any customizations whenever
+a firmware upgrade is applied, and some changes get wiped out in a reboot. I wanted my Dynamic DNS for Cloudflare to
+update anytime my router lost connection or rebooted, so this limitation needed to be overcome.</p><h3 id=the-fix>The Fix</h3><p>Enter <a href=https://github.com/boostchicken/udm-utilities>boostchicken&rsquo;s udm utility project</a>. The project allows scripts
+and services to persist through upgrades and reboots. I spent the time to install the deb package from the unifi-os
+shell, and then put in the work to migrate the cloudflare-ddns container (described in the previous post). I made a
+<a href=https://github.com/boostchicken/udm-utilities/pull/80>contribution</a> so others could also use the script on their
+devices.</p><h3 id=a-linode-proxy>A Linode Proxy</h3><p>I wanted to create a public proxy for all my private services, so I wouldn&rsquo;t have to deal with opening ports on my UDM
+or needlessly expose my public IP. I decided to stet up a linode account since they were sponsoring the devember
+challenge. I signed up, set up an instance, and began investigating VPN and proxy options.</p><h3 id=wireguard-vpn>WireGuard VPN</h3><p>I tried setting up an IPSec and an OpenVPN via the UDM Pro gui, but getting it to suitably proxy traffic required more
+configuration and knowledge than I was prepared. It&rsquo;s likely possible, I just wasn&rsquo;t willing to invest the time for
+either solution. This was in part because I learned about <a href=https://www.wireguard.com/>wireguard</a>. Wireguard
+is incredibly simple to configure for the topology I was hoping to create. The UDM-Pro uses an older Linux Kernel, so
+WireGuard isn&rsquo;t available by default. To overcome this, I installed the WireGuard-Go container using the boostchicken
+utility script. I installed wg-quick in my Linode instance, and pointed a DNS record to point to the public IP of the
+linode instance.</p><h3 id=configuration>Configuration</h3><p>I aimed for the following topology out of my vpn:</p><pre><code> +-----------------------+
+ |                       |
+ |    Public Internet    |
+ |                       |
+ |  +-------------+      |
+ |  |             |      |
+ |  | Workstation |      |
+ |  |             |      |
+ |  +---^---------+      |
+ |      |                |
+ |      |                |
+ |      |                |
+ |      |                |
+ |  +---v--------+       |
+ |  |            |       |      +--------------+       +--------------+
+ |  | Linode-VPN &lt;--------------&gt;              |       |              |
+ |  |            |       |      | Home-Gateway &lt;-------&gt; Home-Network |
+ |  +------------+       |      |              |       |              |
+ |                       |      +--------------+       +--------------+
+ |  +-----------------+  |          |
+ |  |                 |  |          |
+ |  | Cloudflare-DDNS &lt;-------------+
+ |  |                 |  |
+ |  +-----------------+  |
+ |                       |
+ +-----------------------+
+</code></pre><p>Basically, I allow the linode and udmpro to act as Nat routers
+I enabled ipv4 traffic forwarding on my linode instance:</p><p><code>sysctl -w net.ipv4.ip_forward=1</code></p><p>Then used the following WireGuard configuration in my Linode instance:</p><pre><code># Linode VPN Configuration
+[Interface]
+Address = 10.222.0.1/24
+ListenPort = 51820
+PrivateKey = LINODE_VPN_PRIVATE_KEY
+PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+
+# UDM PRO Peer
+[Peer]
+PublicKey = UDM_PRO_PUBLIC_KEY
+AllowedIPs = 10.222.0.2/32, 192.168.1.0/24
+PersistentKeepalive = 25
+
+# Workstation Peer
+[Peer]
+PublicKey = WORKSTATION_PUBLIC_KEY
+AllowedIps = 10.222.0.3/32
+PersistentKeepalive = 25
+
+</code></pre><p>I used the following for my UDM-Pro (Home-Gateway):</p><pre><code>[Interface]
+# Configuration for the UDM-PRO
+# The IP address that this client will have on the WireGuard network.
+Address = 10.222.0.2/32
+PrivateKey = MY_UDM_SECRET_KEY_HERE
+PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o br0 -j MASQUERADE
+PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o br0 -j MASQUERADE
+
+
+[Peer]
+# Configuration for the UDM-PRO to connect to the Linode instance
+# The linode public key
+PublicKey = MY_LINODE_INSTANCE_PUBLIC_KEY
+# The Lindode WireGuard server to connect to.
+Endpoint = MY_LINODE_DNS_SUB_DOMAIN.komoro.ski:51820
+
+# The subnet for the WireGuard VPN
+AllowedIPs = 10.222.0.1/24
+
+PersistentKeepalive = 25
+
+</code></pre><p>Finally, I used the following for my workstation:</p><pre><code>[Interface]
+# Configuration for the Workstation Interface
+
+# The IP address that this client will have on the WireGuard network.
+Address = 10.222.0.3/32
+ListenPort = 51820
+PrivateKey = MY_WORKSTATION_SECRET_KEY_HERE
+
+[Peer]
+# Configuration to peer with the linode vpn instance
+
+# The linode public key
+PublicKey = MY_LINODE_INSTANCE_PUBLIC_KEY 
+
+# The WireGuard server to connect to.
+Endpoint = MY_LINODE_DNS_SUB_DOMAIN.komoro.ski:51820
+
+# The subnet WireGuard VPN is in control of, and the subnet for the home network
+AllowedIPs = 10.222.0.1/24, 192.168.1.0/24
+
+# Ensures that a nat router does not kill the tunnel, by sending a ping every 25 seconds.
+PersistentKeepalive = 25
+
+</code></pre><p>For the server and my workstation, I used systemd to manage the wg-quick service. A detail guide can be found
+<a href=https://zach.bloomqu.ist/blog/2019/11/site-to-site-wireguard-vpn.html>here</a>. I use Fedora linux on my workstation,
+so I added a Gnome <a href=(https://github.com/atareao/wireguard-indicator)>extension</a> to quickly toggle my WireGuard
+connection when I&rsquo;m not on my home network. This allows to me connect via SSH to any ip on my home server.</p><p>That&rsquo;s the quick and dirty of my WireGuard setup. In the next part I&rsquo;ll go over setting up
+<a href=https://caddyserver.com/v2>Caddy</a> on the same Linode instance to host static pages, and act as a reverse proxy for
+services on my home network.</p><hr><div class=related-posts><h5>Related Posts</h5><div class=row><div class="col-sm-4 col-md-4 col-lg-4"><h6 style=text-align:right>December 22, 2020</h6></div><div class="col-sm-8 col-md-8 col-lg-8"><h6 style=text-align:left><strong><a href=/2020/12/22/improving-my-network-domains-and-dns/>Improving My Network: Domains and DNS</a></strong></h6></div></div><div class=row><div class="col-sm-4 col-md-4 col-lg-4"><h6 style=text-align:right>December 21, 2020</h6></div><div class="col-sm-8 col-md-8 col-lg-8"><h6 style=text-align:left><strong><a href=/2020/12/21/improving-my-network-a-messy-situation/>Improving My Network: A Messy Situation</a></strong></h6></div></div><div class=row><div class="col-sm-4 col-md-4 col-lg-4"><h6 style=text-align:right>March 5, 2018</h6></div><div class="col-sm-8 col-md-8 col-lg-8"><h6 style=text-align:left><strong><a href=/2018/03/05/lets-talk-kubernetes-ingress/>Let&rsquo;s Talk Kubernetes Ingress</a></strong></h6></div></div></div></div></div><hr><div class=disqus><div id=disqus_thread></div><script type=text/javascript>!function(){var b,a;if(window.location.hostname=="localhost")return;b='kasualkomoroski',a=document.createElement('script'),a.type='text/javascript',a.async=!0,a.src='//'+b+'.disqus.com/embed.js',(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(a)}()</script><noscript>Please enable JavaScript to view the <a href=http://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=http://disqus.com/ class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div></div></div></div><footer><div id=footer><div class=container><p class=text-muted>&copy; Jared Komoroski. All rights reserved. Powered by <a href=https://gohugo.io/>Hugo</a> and
+<a href=http://www.github.com/nurlansu/hugo-sustain/>sustain</a> with ♥</p></div></div></footer><div class=footer></div><script src=https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js></script><script src=https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js integrity=sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa crossorigin=anonymous></script><script src=https://blog.komoro.ski/js/docs.min.js></script><script src=https://blog.komoro.ski/js/main.js></script><script src=https://blog.komoro.ski/js/ie10-viewport-bug-workaround.js></script></body></html>
