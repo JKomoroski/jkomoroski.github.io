@@ -1,4 +1,5 @@
-<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=author content="map[]"><meta name=description content="A Technical Blog"><link rel=apple-touch-icon sizes=180x180 href=https://blog.komoro.ski/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=https://blog.komoro.ski/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=https://blog.komoro.ski/favicon-16x16.png><link rel=manifest href=https://blog.komoro.ski//site.webmanifest><title>Improving My Network: Static Hosting and Reverse Proxy with Caddy</title><meta name=generator content="Hugo 0.80.0"><link rel=stylesheet href=https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css integrity=sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u crossorigin=anonymous><link rel=stylesheet type=text/css href=https://blog.komoro.ski/css/main.css><link rel=stylesheet type=text/css href=https://use.fontawesome.com/releases/v5.0.6/css/all.css><link rel=stylesheet type=text/css href=https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css><link rel=stylesheet type=text/css href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old"><!--[if lt IE 9]><script src=https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js></script><script src=https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js></script><![endif]--></head><body><div id=wrap><nav class="navbar navbar-default"><div class=container><div class=navbar-header><a class=navbar-brand href=https://blog.komoro.ski/><i class="fa fa-home"></i></a></div><div id=navbar><ul class="nav navbar-nav navbar-right"><li><a href=/blog/>BLOG</a></li><li><a href=/projects/>PROJECTS</a></li><li><a href=/about/>ABOUT</a></li></ul></div></div></nav><div class=container><div class=blog-post><h3><strong><a href=https://blog.komoro.ski/2021/01/04/improving-my-network-static-hosting-and-reverse-proxy-with-caddy/>Improving My Network: Static Hosting and Reverse Proxy with Caddy</a></strong></h3></div><div class=blog-title><h4>January 4, 2021
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=author content="map[]"><meta name=description content="A Technical Blog"><link rel=apple-touch-icon sizes=180x180 href=https://blog.komoro.ski/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=https://blog.komoro.ski/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=https://blog.komoro.ski/favicon-16x16.png><link rel=manifest href=https://blog.komoro.ski//site.webmanifest><title>Improving My Network: Static Hosting and Reverse Proxy with Caddy</title><meta name=generator content="Hugo 0.98.0"><link rel=stylesheet href=https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css integrity=sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u crossorigin=anonymous><link rel=stylesheet type=text/css href=https://blog.komoro.ski/css/main.css><link rel=stylesheet type=text/css href=https://use.fontawesome.com/releases/v5.0.6/css/all.css><link rel=stylesheet type=text/css href=https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css><link rel=stylesheet type=text/css href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old"><!--[if lt IE 9]><script src=https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js></script>
+<script src=https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js></script><![endif]--></head><body><div id=wrap><nav class="navbar navbar-default"><div class=container><div class=navbar-header><a class=navbar-brand href=https://blog.komoro.ski/><i class="fa fa-home"></i></a></div><div id=navbar><ul class="nav navbar-nav navbar-right"><li><a href=/blog/>BLOG</a></li><li><a href=/projects/>PROJECTS</a></li><li><a href=/about/>ABOUT</a></li></ul></div></div></nav><div class=container><div class=blog-post><h3><strong><a href=https://blog.komoro.ski/2021/01/04/improving-my-network-static-hosting-and-reverse-proxy-with-caddy/>Improving My Network: Static Hosting and Reverse Proxy with Caddy</a></strong></h3></div><div class=blog-title><h4>January 4, 2021
 &nbsp;&nbsp;
 <span class="label label-success">network</span>
 <span class="label label-success">devember</span>
@@ -10,122 +11,121 @@ others, but I landed on <a href=https://caddyserver.com/v2>Caddy</a>.</p><h3 id=
 build of caddy can be configured <a href=https://caddyserver.com/download>here</a>. The script then installs the downloaded
 binary to <code>/usr/local/bin</code>, and grants it permission to bind to low ports. It then creates a caddy system user, and
 sets up the various system directories. The script then creates a systemd unit file, which contains a service
-configuration. The script then creates a caddy configuration file, and enables the caddy service.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=color:#75715e>#!/usr/bin/env bash
-</span><span style=color:#75715e></span>
-wget -q -O caddy <span style=color:#e6db74>&#34;https://caddyserver.com/api/download?os=linux&amp;arch=amd64&amp;p=github.com%2Fabiosoft%2Fcaddy-exec&amp;p=github.com%2Fabiosoft%2Fcaddy-hmac&amp;p=github.com%2Fcaddy-dns%2Fcloudflare&#34;</span>
-mv <span style=color:#e6db74>&#34;./caddy&#34;</span> <span style=color:#e6db74>&#34;/usr/local/bin/caddy&#34;</span>
-chmod +x <span style=color:#e6db74>&#34;/usr/local/bin/caddy&#34;</span>
-setcap cap_net_bind_service+ep /usr/local/bin/caddy
-
-useradd --shell /bin/false --home-dir /etc/caddy --system caddy
-mkdir -p /etc/caddy/.config /etc/caddy/.local
-mkdir -p /var/log/caddy
-mkdir -p /var/caddy/html
-chown -R caddy: /etc/caddy /var/log/caddy
-
-cat <span style=color:#e6db74>&lt;&lt;EOF &gt;&gt; /etc/systemd/system/caddy.service
-</span><span style=color:#e6db74>[Unit]
-</span><span style=color:#e6db74>Description=Caddy web server
-</span><span style=color:#e6db74>After=network-online.target
-</span><span style=color:#e6db74>
-</span><span style=color:#e6db74>[Service]
-</span><span style=color:#e6db74>User=caddy
-</span><span style=color:#e6db74>Group=caddy
-</span><span style=color:#e6db74>Type=exec
-</span><span style=color:#e6db74>WorkingDirectory=/var/caddy/html
-</span><span style=color:#e6db74>
-</span><span style=color:#e6db74>ExecStart=/usr/local/bin/caddy run -config /etc/caddy/Caddyfile
-</span><span style=color:#e6db74>ExecReload=/usr/local/bin/caddy reload -config /etc/caddy/Caddyfile
-</span><span style=color:#e6db74>ExecStop=/usr/local/bin/caddy stop
-</span><span style=color:#e6db74>
-</span><span style=color:#e6db74>LimitNOFILE=1048576
-</span><span style=color:#e6db74>LimitNPROC=512
-</span><span style=color:#e6db74>
-</span><span style=color:#e6db74>PrivateTmp=true
-</span><span style=color:#e6db74>PrivateDevices=true
-</span><span style=color:#e6db74>ProtectHome=true
-</span><span style=color:#e6db74>ProtectSystem=strict
-</span><span style=color:#e6db74>ReadWritePaths=/etc/caddy/.local /etc/caddy/.config /var/log
-</span><span style=color:#e6db74>
-</span><span style=color:#e6db74>CapabilityBoundingSet=CAP_NET_BIND_SERVICE
-</span><span style=color:#e6db74>AmbientCapabilities=CAP_NET_BIND_SERVICE
-</span><span style=color:#e6db74>NoNewPrivileges=true
-</span><span style=color:#e6db74>
-</span><span style=color:#e6db74>[Install]
-</span><span style=color:#e6db74>WantedBy=multi-user.target
-</span><span style=color:#e6db74>
-</span><span style=color:#e6db74>EOF</span>
-
-cat <span style=color:#e6db74>&lt;&lt;EOF &gt;&gt; /etc/caddy/Caddyfile
-</span><span style=color:#e6db74>https://blog.komoro.ski {
-</span><span style=color:#e6db74>    encode gzip
-</span><span style=color:#e6db74>    file_server {
-</span><span style=color:#e6db74>        hide 404.html .git
-</span><span style=color:#e6db74>    }
-</span><span style=color:#e6db74>    
-</span><span style=color:#e6db74>    handle_errors {
-</span><span style=color:#e6db74>        @404 {
-</span><span style=color:#e6db74>            expression {http.error.status_code} == 404
-</span><span style=color:#e6db74>        }
-</span><span style=color:#e6db74>    
-</span><span style=color:#e6db74>        rewrite @404 /404.html
-</span><span style=color:#e6db74>        file_server
-</span><span style=color:#e6db74>    }
-</span><span style=color:#e6db74>    
-</span><span style=color:#e6db74>    @github {
-</span><span style=color:#e6db74>        path /webhook
-</span><span style=color:#e6db74>        header_regexp X-Hub-Signature &#34;[a-z0-9]+\=([a-z0-9]+)&#34;
-</span><span style=color:#e6db74>    }
-</span><span style=color:#e6db74>    
-</span><span style=color:#e6db74>    @hmac {
-</span><span style=color:#e6db74>        expression {hmac.signature} == {http.regexp.1}
-</span><span style=color:#e6db74>    }
-</span><span style=color:#e6db74>
-</span><span style=color:#e6db74>    route @github {
-</span><span style=color:#e6db74>        hmac sha1 MY_SECRET_WEBHOOK_KEY_HERE
-</span><span style=color:#e6db74>        exec @hmac {
-</span><span style=color:#e6db74>            command git
-</span><span style=color:#e6db74>            args \
-</span><span style=color:#e6db74>                pull \
-</span><span style=color:#e6db74>                origin \
-</span><span style=color:#e6db74>                self_hosted
-</span><span style=color:#e6db74>            directory /var/caddy/html
-</span><span style=color:#e6db74>        }
-</span><span style=color:#e6db74>    }
-</span><span style=color:#e6db74>
-</span><span style=color:#e6db74>    tls {
-</span><span style=color:#e6db74>        dns cloudflare MY_SECRET_CLOUDFLARE_KEY_HERE
-</span><span style=color:#e6db74>    }
-</span><span style=color:#e6db74>
-</span><span style=color:#e6db74>    log {
-</span><span style=color:#e6db74>        output file /var/log/caddy/access.log {
-</span><span style=color:#e6db74>            roll_size 10MB
-</span><span style=color:#e6db74>            roll_keep 5
-</span><span style=color:#e6db74>            roll_keep_for 240h
-</span><span style=color:#e6db74>        }
-</span><span style=color:#e6db74>    }
-</span><span style=color:#e6db74>}
-</span><span style=color:#e6db74>
-</span><span style=color:#e6db74>https://git.komoro.ski {
-</span><span style=color:#e6db74>    reverse_proxy MY_SECRET_PRIVATE_DOMAIN.komoro.ski:3000
-</span><span style=color:#e6db74>}
-</span><span style=color:#e6db74>
-</span><span style=color:#e6db74>EOF</span>
-
-systemctl enable --now caddy.service
-
-</code></pre></div><h3 id=caddyfile-description>Caddyfile Description</h3><p>The Caddyfile has two sections. It hosts a static website, and enables a reverse proxy to a private gitea instance. The
-reverse proxy is quite simple:</p><pre><code>https://git.komoro.ski {
+configuration. The script then creates a caddy configuration file, and enables the caddy service.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span><span style=color:#75715e>#!/usr/bin/env bash
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span>wget -q -O caddy <span style=color:#e6db74>&#34;https://caddyserver.com/api/download?os=linux&amp;arch=amd64&amp;p=github.com%2Fabiosoft%2Fcaddy-exec&amp;p=github.com%2Fabiosoft%2Fcaddy-hmac&amp;p=github.com%2Fcaddy-dns%2Fcloudflare&#34;</span>
+</span></span><span style=display:flex><span>mv <span style=color:#e6db74>&#34;./caddy&#34;</span> <span style=color:#e6db74>&#34;/usr/local/bin/caddy&#34;</span>
+</span></span><span style=display:flex><span>chmod +x <span style=color:#e6db74>&#34;/usr/local/bin/caddy&#34;</span>
+</span></span><span style=display:flex><span>setcap cap_net_bind_service+ep /usr/local/bin/caddy
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>useradd --shell /bin/false --home-dir /etc/caddy --system caddy
+</span></span><span style=display:flex><span>mkdir -p /etc/caddy/.config /etc/caddy/.local
+</span></span><span style=display:flex><span>mkdir -p /var/log/caddy
+</span></span><span style=display:flex><span>mkdir -p /var/caddy/html
+</span></span><span style=display:flex><span>chown -R caddy: /etc/caddy /var/log/caddy
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>cat <span style=color:#e6db74>&lt;&lt;EOF &gt;&gt; /etc/systemd/system/caddy.service
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>[Unit]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>Description=Caddy web server
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>After=network-online.target
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>[Service]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>User=caddy
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>Group=caddy
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>Type=exec
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>WorkingDirectory=/var/caddy/html
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>ExecStart=/usr/local/bin/caddy run -config /etc/caddy/Caddyfile
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>ExecReload=/usr/local/bin/caddy reload -config /etc/caddy/Caddyfile
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>ExecStop=/usr/local/bin/caddy stop
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>LimitNOFILE=1048576
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>LimitNPROC=512
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>PrivateTmp=true
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>PrivateDevices=true
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>ProtectHome=true
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>ProtectSystem=strict
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>ReadWritePaths=/etc/caddy/.local /etc/caddy/.config /var/log
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>AmbientCapabilities=CAP_NET_BIND_SERVICE
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>NoNewPrivileges=true
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>[Install]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>WantedBy=multi-user.target
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>EOF</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>cat <span style=color:#e6db74>&lt;&lt;EOF &gt;&gt; /etc/caddy/Caddyfile
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>https://blog.komoro.ski {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    encode gzip
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    file_server {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        hide 404.html .git
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    }
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    handle_errors {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        @404 {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            expression {http.error.status_code} == 404
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        }
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        rewrite @404 /404.html
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        file_server
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    }
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    @github {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        path /webhook
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        header_regexp X-Hub-Signature &#34;[a-z0-9]+\=([a-z0-9]+)&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    }
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    @hmac {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        expression {hmac.signature} == {http.regexp.1}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    }
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    route @github {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        hmac sha1 MY_SECRET_WEBHOOK_KEY_HERE
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        exec @hmac {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            command git
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            args \
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                pull \
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                origin \
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                self_hosted
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            directory /var/caddy/html
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        }
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    }
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    tls {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        dns cloudflare MY_SECRET_CLOUDFLARE_KEY_HERE
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    }
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    log {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        output file /var/log/caddy/access.log {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            roll_size 10MB
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            roll_keep 5
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            roll_keep_for 240h
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        }
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    }
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>https://git.komoro.ski {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    reverse_proxy MY_SECRET_PRIVATE_DOMAIN.komoro.ski:3000
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>EOF</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>systemctl enable --now caddy.service
+</span></span></code></pre></div><h3 id=caddyfile-description>Caddyfile Description</h3><p>The Caddyfile has two sections. It hosts a static website, and enables a reverse proxy to a private gitea instance. The
+reverse proxy is quite simple:</p><pre tabindex=0><code>https://git.komoro.ski {
     reverse_proxy MY_SECRET_PRIVATE_DOMAIN.komoro.ski:3000
 }
 </code></pre><p>The private domain points to a private IP available via the previously configured WireGuard VPN. Caddy takes care of
-enabling and configuring a TLS cert, and redirecting http traffic to https.</p><p>The static site is a bit more involved. The core configuration is:</p><pre><code>https://blog.komoro.ski {
+enabling and configuring a TLS cert, and redirecting http traffic to https.</p><p>The static site is a bit more involved. The core configuration is:</p><pre tabindex=0><code>https://blog.komoro.ski {
     fileserver
     encode gzip
 }
 </code></pre><p>This creates a static file server out of the working directory defined in the systemd unit file, and allows gzip
 compression for all served files. Again, TLS certs and http redirect are provided. Everything else in the blog
-configuration is optional.</p><p>The simple <code>log</code> option rotates the caddy access log file:</p><pre><code>https://blog.komoro.ski {
+configuration is optional.</p><p>The simple <code>log</code> option rotates the caddy access log file:</p><pre tabindex=0><code>https://blog.komoro.ski {
     ...
     ...
     log {
@@ -136,7 +136,7 @@ configuration is optional.</p><p>The simple <code>log</code> option rotates the 
         }
     }
 }
-</code></pre><p>The file server options hides some files and redirects the default 404 errors to a custom 404 page:</p><pre><code>https://blog.komoro.ski {
+</code></pre><p>The file server options hides some files and redirects the default 404 errors to a custom 404 page:</p><pre tabindex=0><code>https://blog.komoro.ski {
     ...
     file_server {
         hide 404.html .git
@@ -153,7 +153,7 @@ configuration is optional.</p><p>The simple <code>log</code> option rotates the 
     ...
 }
 </code></pre><p>The <code>tls</code> directive uses the <a href=https://github.com/caddy-dns/cloudflare>cloudflare-dns</a> plugin to leverage cloudflare dns
-for acme challenges.</p><pre><code>https://blog.komoro.ski {
+for acme challenges.</p><pre tabindex=0><code>https://blog.komoro.ski {
     ...
     tls {
         dns cloudflare MY_SECRET_CLOUDFLARE_KEY_HERE
@@ -162,12 +162,12 @@ for acme challenges.</p><pre><code>https://blog.komoro.ski {
 }
 </code></pre><p>The last portion of this config is support to receive a webhook at the <code>/webhook</code> path. It then validates the HMAC
 header value authentication. If validated, the exec plugin executes a <code>git pull</code> command which pulls a new version of
-the static site files from github.</p><pre><code>https://blog.komoro.ski {
+the static site files from github.</p><pre tabindex=0><code>https://blog.komoro.ski {
     ...
     ...
     @github {
         path /webhook
-        header_regexp X-Hub-Signature &quot;[a-z0-9]+\=([a-z0-9]+)&quot;
+        header_regexp X-Hub-Signature &#34;[a-z0-9]+\=([a-z0-9]+)&#34;
     }
     
     @hmac {
@@ -188,5 +188,9 @@ the static site files from github.</p><pre><code>https://blog.komoro.ski {
     ...
     ...
 }
-</code></pre><hr><div class=related-posts><h5>Related Posts</h5><div class=row><div class="col-sm-4 col-md-4 col-lg-4"><h6 style=text-align:right>January 1, 2021</h6></div><div class="col-sm-8 col-md-8 col-lg-8"><h6 style=text-align:left><strong><a href=/2021/01/01/improving-my-network-public-proxy-and-wireguard-vpn/>Improving My Network: Public Proxy and Wireguard VPN</a></strong></h6></div></div><div class=row><div class="col-sm-4 col-md-4 col-lg-4"><h6 style=text-align:right>December 22, 2020</h6></div><div class="col-sm-8 col-md-8 col-lg-8"><h6 style=text-align:left><strong><a href=/2020/12/22/improving-my-network-domains-and-dns/>Improving My Network: Domains and DNS</a></strong></h6></div></div><div class=row><div class="col-sm-4 col-md-4 col-lg-4"><h6 style=text-align:right>December 21, 2020</h6></div><div class="col-sm-8 col-md-8 col-lg-8"><h6 style=text-align:left><strong><a href=/2020/12/21/improving-my-network-a-messy-situation/>Improving My Network: A Messy Situation</a></strong></h6></div></div></div></div></div><hr><div class=disqus><div id=disqus_thread></div><script type=text/javascript>(function(){var b,a;if(window.location.hostname=="localhost")return;b='kasualkomoroski',a=document.createElement('script'),a.type='text/javascript',a.async=!0,a.src='//'+b+'.disqus.com/embed.js',(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(a)})()</script><noscript>Please enable JavaScript to view the <a href=http://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=http://disqus.com/ class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div></div></div></div><footer><div id=footer><div class=container><p class=text-muted>&copy; Jared Komoroski. All rights reserved. Powered by <a href=https://gohugo.io/>Hugo</a> and
-<a href=http://www.github.com/nurlansu/hugo-sustain/>sustain</a> with ♥</p></div></div></footer><div class=footer></div><script src=https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js></script><script src=https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js integrity=sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa crossorigin=anonymous></script><script src=https://blog.komoro.ski/js/docs.min.js></script><script src=https://blog.komoro.ski/js/main.js></script><script src=https://blog.komoro.ski/js/ie10-viewport-bug-workaround.js></script></body></html>
+</code></pre><hr><div class=related-posts><h5>Related Posts</h5><div class=row><div class="col-sm-4 col-md-4 col-lg-4"><h6 style=text-align:right>January 1, 2021</h6></div><div class="col-sm-8 col-md-8 col-lg-8"><h6 style=text-align:left><strong><a href=/2021/01/01/improving-my-network-public-proxy-and-wireguard-vpn/>Improving My Network: Public Proxy and Wireguard VPN</a></strong></h6></div></div><div class=row><div class="col-sm-4 col-md-4 col-lg-4"><h6 style=text-align:right>December 22, 2020</h6></div><div class="col-sm-8 col-md-8 col-lg-8"><h6 style=text-align:left><strong><a href=/2020/12/22/improving-my-network-domains-and-dns/>Improving My Network: Domains and DNS</a></strong></h6></div></div><div class=row><div class="col-sm-4 col-md-4 col-lg-4"><h6 style=text-align:right>December 21, 2020</h6></div><div class="col-sm-8 col-md-8 col-lg-8"><h6 style=text-align:left><strong><a href=/2020/12/21/improving-my-network-a-messy-situation/>Improving My Network: A Messy Situation</a></strong></h6></div></div></div></div></div><hr><div class=disqus><div id=disqus_thread></div><script type=text/javascript>(function(){if(window.location.hostname=="localhost")return;var t="kasualkomoroski",e=document.createElement("script");e.type="text/javascript",e.async=!0,e.src="//"+t+".disqus.com/embed.js",(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(e)})()</script><noscript>Please enable JavaScript to view the <a href=http://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=http://disqus.com/ class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div></div></div></div><footer><div id=footer><div class=container><p class=text-muted>&copy; Jared Komoroski. All rights reserved. Powered by <a href=https://gohugo.io/>Hugo</a> and
+<a href=http://www.github.com/nurlansu/hugo-sustain/>sustain</a> with ♥</p></div></div></footer><div class=footer></div><script src=https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js></script>
+<script src=https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js integrity=sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa crossorigin=anonymous></script>
+<script src=https://blog.komoro.ski/js/docs.min.js></script>
+<script src=https://blog.komoro.ski/js/main.js></script>
+<script src=https://blog.komoro.ski/js/ie10-viewport-bug-workaround.js></script></body></html>
